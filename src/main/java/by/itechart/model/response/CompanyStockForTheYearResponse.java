@@ -1,4 +1,4 @@
-package by.itechart.response;
+package by.itechart.model.response;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +26,7 @@ public class CompanyStockForTheYearResponse {
     @JsonProperty("symbol")
     private String symbol;
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private final Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {

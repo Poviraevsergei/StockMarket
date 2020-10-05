@@ -1,14 +1,14 @@
 package by.itechart.serviceFeign;
 
-import by.itechart.response.CompanyStockForTheDayResponse;
-import by.itechart.response.CompanyStockForTheYearResponse;
-import by.itechart.response.StockCandlesResponse;
+import by.itechart.model.response.CompanyStockForTheDayResponse;
+import by.itechart.model.response.CompanyStockForTheYearResponse;
+import by.itechart.model.response.StockCandlesResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(url = "https://finnhub.io/api/v1", name = "Stock")
-public interface StockService {
+public interface StockServiceFeign {
 
     @GetMapping("/quote?symbol={ticker}&token=btqbebn48v6t9hdd6cog")
     CompanyStockForTheDayResponse getCompanyStockForTheDay(@PathVariable String ticker);

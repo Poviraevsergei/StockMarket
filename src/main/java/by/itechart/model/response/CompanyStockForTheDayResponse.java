@@ -1,5 +1,4 @@
-
-package by.itechart.response;
+package by.itechart.model.response;
 
 import java.util.HashMap;
 import java.util.Map;
