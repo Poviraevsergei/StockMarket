@@ -28,11 +28,11 @@ CREATE TABLE COMPANY
 CREATE TABLE STOCK
 (
     id                   INT AUTO_INCREMENT PRIMARY KEY,
-    company              bigint       not null references COMPANY on update cascade on delete cascade,
+    company              INT NOT NULL references COMPANY on update cascade on delete cascade,
     open_price           VARCHAR(250) NOT NULL,
     close_price          VARCHAR(250) NOT NULL,
     ticker               VARCHAR(250) NOT NULL,
-    date                 date         not null,
+    date                 date         NOT NULL,
     annual_dividends     VARCHAR(250) NOT NULL,
     lowest_annual_price  VARCHAR(250) NOT NULL,
     highest_annual_price VARCHAR(250) NOT NULL

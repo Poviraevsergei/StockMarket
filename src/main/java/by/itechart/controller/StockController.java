@@ -6,27 +6,27 @@ import by.itechart.model.response.CompanyStockForTheYearResponse;
 import by.itechart.model.response.StockCandlesResponse;
 import by.itechart.service.StockService;
 import by.itechart.serviceFeign.StockServiceFeign;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController()
-@RequestMapping("/stock")
+@RequestMapping(value = "/stock")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class StockController {
-    StockServiceFeign stockServiceFeign;
-    StockService stockService;
 
-    public StockController(StockServiceFeign stockServiceFeign, StockService stockService) {
-        this.stockServiceFeign = stockServiceFeign;
-        this.stockService = stockService;
-    }
+    private final StockServiceFeign stockServiceFeign;
+    private final StockService stockService;
 
     @GetMapping("/getAllStocks")
     public List<Stock> findAllStock() {
@@ -53,13 +53,13 @@ public class StockController {
         return stockServiceFeign.getStockCandles(ticker, from, to, resolution);
     }
 
-    @PostMapping("/create")
-    public Stock createStock(Stock stock) {
+    @PostMapping(value = "/create")
+    public Stock createStock(@RequestBody Stock stock) {
         return stockService.createStock(stock);
     }
 
-    @PutMapping("/update")
-    public Stock updateStock(Stock stock) {
+    @PutMapping(value = "/update")
+    public Stock updateStock(@RequestBody Stock stock) {
         return stockService.updateStock(stock);
     }
 

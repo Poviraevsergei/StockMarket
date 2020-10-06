@@ -7,28 +7,27 @@ import by.itechart.model.response.CompanyNewsResponse;
 import by.itechart.model.response.CompanyResponse;
 import by.itechart.service.CompanyService;
 import by.itechart.serviceFeign.CompanyServiceFeign;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/company")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CompanyController {
 
-    CompanyServiceFeign companyServiceFeign;
-    CompanyService companyService;
-
-    public CompanyController(CompanyServiceFeign companyServiceFeign, CompanyService companyService) {
-        this.companyServiceFeign = companyServiceFeign;
-        this.companyService = companyService;
-    }
+    private final CompanyServiceFeign companyServiceFeign;
+    private final CompanyService companyService;
 
     @GetMapping("/getCompanyByTicker/{ticker}")
     public Company getCompanyByTicker(@PathVariable String ticker) {
@@ -66,12 +65,12 @@ public class CompanyController {
     }
 
     @PostMapping("/create")
-    public Company createCompany(Company company) {
+    public Company createCompany(@RequestBody Company company) {
         return companyService.createCompany(company);
     }
 
     @PutMapping("/update")
-    public Company updateCompany(Company company) {
+    public Company updateCompany(@RequestBody Company company) {
         return companyService.updateCompany(company);
     }
 

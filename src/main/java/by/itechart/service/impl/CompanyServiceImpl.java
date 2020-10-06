@@ -38,12 +38,12 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Company updateCompany(Company company) {
+        company.setId(companyRepository.findCompaniesByTicker(company.getTicker()).getId());
         return companyRepository.save(company);
     }
 
     @Override
     public void deleteCompanyById(Long id) {
-
         companyRepository.deleteById(id);
     }
 }

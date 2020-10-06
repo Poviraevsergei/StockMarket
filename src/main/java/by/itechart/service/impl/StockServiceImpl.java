@@ -21,6 +21,7 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public Stock createStock(Stock stock) {
+        stock.setCompany(companyRepository.findCompaniesByTicker(stock.getTicker()));
         return stockRepository.save(stock);
     }
 
@@ -36,6 +37,7 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public Stock updateStock(Stock stock) {
+        stock.setCompany(companyRepository.findCompaniesByTicker(stock.getTicker()));
         return stockRepository.save(stock);
     }
 
