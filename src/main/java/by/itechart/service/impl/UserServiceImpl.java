@@ -1,21 +1,20 @@
 package by.itechart.service.impl;
 
 import by.itechart.model.domain.User;
-import by.itechart.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import by.itechart.service.UserService;
+import by.itechart.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserServiceImpl implements UserService {
 
-    UserRepository userRepository;
-
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final UserRepository userRepository;
 
     @Override
     public List<User> findAllUsers() {

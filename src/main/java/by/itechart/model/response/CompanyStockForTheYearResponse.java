@@ -1,15 +1,15 @@
 package by.itechart.model.response;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.HashMap;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
+import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import lombok.Data;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -25,6 +25,7 @@ public class CompanyStockForTheYearResponse {
 
     @JsonProperty("symbol")
     private String symbol;
+
     @JsonIgnore
     private final Map<String, Object> additionalProperties = new HashMap<String, Object>();
 

@@ -1,16 +1,16 @@
 package by.itechart.model.response;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.List;
+import java.util.HashMap;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
+import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import lombok.Data;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -26,19 +26,26 @@ import lombok.Data;
 public class StockCandlesResponse {
 
     @JsonProperty("c")
-    private List<Double> currentPrices = null;
+    private List<Double> currentPrices;
+
     @JsonProperty("h")
-    private List<Double> highPrices = null;
+    private List<Double> highPrices;
+
     @JsonProperty("l")
-    private List<Double> lowPrices = null;
+    private List<Double> lowPrices;
+
     @JsonProperty("o")
-    private List<Double> openPrices = null;
+    private List<Double> openPrices;
+
     @JsonProperty("s")
     private String statusResponse;
+
     @JsonProperty("t")
-    private List<Integer> timestamps = null;
+    private List<Integer> timestamps;
+
     @JsonProperty("v")
-    private List<Integer> volume = null;
+    private List<Integer> volume;
+
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 

@@ -1,14 +1,15 @@
 package by.itechart.serviceFeign;
 
-import by.itechart.model.response.AllCompaniesResponse;
-import by.itechart.model.response.CompanyFinancialReportResponse;
-import by.itechart.model.response.CompanyNewsResponse;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
 import by.itechart.model.response.CompanyResponse;
+import by.itechart.model.response.CompanyNewsResponse;
 import org.springframework.cloud.openfeign.FeignClient;
+import by.itechart.model.response.AllCompaniesResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
-import java.util.List;
+import by.itechart.model.response.CompanyFinancialReportResponse;
 
 @FeignClient(url = "https://finnhub.io/api/v1", name = "company")
 public interface CompanyServiceFeign {

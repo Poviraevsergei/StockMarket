@@ -1,20 +1,20 @@
 package by.itechart.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import by.itechart.model.domain.Company;
-import by.itechart.repository.CompanyRepository;
 import by.itechart.service.CompanyService;
 import org.springframework.stereotype.Service;
+import by.itechart.repository.CompanyRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CompanyServiceImpl implements CompanyService {
-    CompanyRepository companyRepository;
 
-    public CompanyServiceImpl(CompanyRepository companyRepository) {
-        this.companyRepository = companyRepository;
-    }
+    private final CompanyRepository companyRepository;
 
     @Override
     public List<Company> findAllCompanyFromDb() {

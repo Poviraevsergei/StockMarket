@@ -1,26 +1,26 @@
 package by.itechart.model.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.ToString;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import java.util.Set;
+import java.util.HashSet;
 import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
+import java.io.Serializable;
+import javax.persistence.Table;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.ManyToMany;
-import javax.persistence.GenerationType;
-import javax.persistence.FetchType;
 import javax.persistence.CascadeType;
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 @ToString(exclude = {
         "companyStockes", "observers"
@@ -34,6 +34,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Company implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
