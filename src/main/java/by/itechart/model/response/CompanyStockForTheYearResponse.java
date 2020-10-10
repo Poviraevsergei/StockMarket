@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 import lombok.Data;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "symbol"
 })
 @Data
+@Component
 public class CompanyStockForTheYearResponse {
 
     @JsonProperty("metricType")
@@ -26,7 +27,7 @@ public class CompanyStockForTheYearResponse {
     @JsonProperty("symbol")
     private String symbol;
 
-    @JsonIgnore
+    @JsonProperty("metric")
     private final Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonAnyGetter

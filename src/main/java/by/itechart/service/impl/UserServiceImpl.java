@@ -1,5 +1,6 @@
 package by.itechart.service.impl;
 
+import by.itechart.model.domain.Role;
 import by.itechart.model.domain.User;
 import lombok.RequiredArgsConstructor;
 import by.itechart.service.UserService;
@@ -7,6 +8,7 @@ import by.itechart.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +30,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
+        Role role = new Role();
+        role.setIsActive(false);
+        role.setExpiryDate(new Date());
+        user.setRole(role);
         return userRepository.save(user);
     }
 

@@ -13,13 +13,17 @@ import java.util.HashSet;
 import java.sql.Timestamp;
 import javax.persistence.Id;
 import java.io.Serializable;
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Column;
+import javax.persistence.OneToOne;
 import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
-import javax.persistence.GeneratedValue;
+import javax.persistence.JoinColumn;
+import javax.persistence.CascadeType;
 import javax.persistence.GenerationType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 @ToString(exclude = {
@@ -43,8 +47,9 @@ public class User implements Serializable {
     @Column
     private String password;
 
-    @Column
-    private String role;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @PrimaryKeyJoinColumn
+    private Role role;
 
     @Column
     private String email;
@@ -54,9 +59,6 @@ public class User implements Serializable {
 
     @Column
     private Timestamp changed;
-
-    @Column
-    private Boolean deleted;
 
     @ManyToMany
     @JsonManagedReference
