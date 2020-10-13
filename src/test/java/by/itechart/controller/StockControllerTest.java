@@ -16,8 +16,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Date;
 import java.util.Optional;
 import java.util.ArrayList;
 
@@ -62,7 +63,7 @@ class StockControllerTest {
         stock.setClosePrice("113.02");
         stock.setTicker("MCDS");
         stock.setOpenPrice("2020-10-05");
-        stock.setDate(new Date());
+        stock.setDate(Timestamp.valueOf(LocalDateTime.now()));
         stock.setAnnualDividends("0.75");
         stock.setLowestAnnualPrice("53.1525");
         stock.setHighestAnnualPrice("153.1525");
@@ -96,7 +97,7 @@ class StockControllerTest {
 
     @Test
     void getCompanyStockForTheDay() throws Exception {
-        when(stockServiceFeign.getCompanyStockForTheDay(anyString())).thenReturn(companyStockForTheDayResponse);
+        when(stockServiceFeign.getCompanyStockForTheDay(anyString())).thenReturn(Optional.ofNullable(companyStockForTheDayResponse));
 
         mockMvc.perform(get("/stock/getCompanyStockForTheDay?ticker=bla"))
                 .andExpect(status().isOk())
@@ -107,7 +108,7 @@ class StockControllerTest {
 
     @Test
     void getCompanyStockForTheYear() throws Exception {
-        when(stockServiceFeign.getCompanyStockForTheYear(anyString())).thenReturn(companyStockForTheYearResponse);
+        when(stockServiceFeign.getCompanyStockForTheYear(anyString())).thenReturn(Optional.ofNullable(companyStockForTheYearResponse));
 
         mockMvc.perform(get("/stock/getCompanyStockForTheYear?ticker=TSLA"))
                 .andExpect(status().isOk())

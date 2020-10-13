@@ -40,12 +40,12 @@ public class StockController {
     }
 
     @GetMapping("/getCompanyStockForTheDay")
-    public CompanyStockForTheDayResponse getCompanyStockForTheDay(@RequestParam String ticker) {
+    public Optional<CompanyStockForTheDayResponse> getCompanyStockForTheDay(@RequestParam String ticker) {
         return stockServiceFeign.getCompanyStockForTheDay(ticker);
     }
 
     @GetMapping("/getCompanyStockForTheYear")
-    public CompanyStockForTheYearResponse getCompanyStockForTheYear(@RequestParam String ticker) {
+    public Optional<CompanyStockForTheYearResponse> getCompanyStockForTheYear(@RequestParam String ticker) {
         return stockServiceFeign.getCompanyStockForTheYear(ticker);
     }
 

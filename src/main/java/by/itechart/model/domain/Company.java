@@ -22,15 +22,15 @@ import javax.persistence.CascadeType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
+@Data
+@Table
+@Entity
 @ToString(exclude = {
         "companyStockes", "observers"
 })
 @EqualsAndHashCode(exclude = {
         "companyStockes", "observers"
 })
-@Entity
-@Table
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Company implements Serializable {

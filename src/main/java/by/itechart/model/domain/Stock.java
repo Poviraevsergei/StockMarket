@@ -7,28 +7,26 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import javax.persistence.Id;
 import java.io.Serializable;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Temporal;
 import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
-import javax.persistence.TemporalType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
+@Data
+@Table
+@Entity
 @ToString(exclude = {
         "company"
 })
 @EqualsAndHashCode(exclude = {
         "company"
 })
-@Entity
-@Table
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Stock implements Serializable {
@@ -52,8 +50,7 @@ public class Stock implements Serializable {
     private String ticker;
 
     @Column
-    @Temporal(TemporalType.DATE)
-    private Date date;
+    private Timestamp date;
 
     @Column
     private String annualDividends;

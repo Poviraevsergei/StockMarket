@@ -12,7 +12,8 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
+@Component
 @JsonPropertyOrder({
         "currency",
         "description",
@@ -20,8 +21,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "symbol",
         "type"
 })
-@Data
-@Component
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AllCompaniesResponse {
 
     @JsonProperty("currency")

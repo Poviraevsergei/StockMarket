@@ -1,11 +1,11 @@
 INSERT INTO USER (login, password, email, created, changed)
 VALUES ('poviraev', 'pass1', 'poviraevsergei@gmail.com', '1970-01-01 00:00:01', '1970-01-01 00:00:01'),
-       ('Carl', 'pass2', 'email2', '1970-01-01 00:00:01', '1970-01-01 00:00:01'),
+       ('Carl', 'pass2', 'poviraevsergei@gmail.com', '1970-01-01 00:00:01', '1970-01-01 00:00:01'),
        ('Sasha', 'pass3', 'email3', '1970-01-01 00:00:01', '1970-01-01 00:00:01');
 
 INSERT INTO ROLE (is_active, expiry_date)
-VALUES (true, '2020-10-11'),
-       (true, '2021-10-11'),
+VALUES (true, '2020-10-14'),
+       (true, '2020-10-13'),
        (true, '2021-10-10');
 
 INSERT INTO COMPANY (name, ticker, industry, phone, url, logo)

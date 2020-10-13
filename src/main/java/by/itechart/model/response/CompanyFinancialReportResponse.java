@@ -12,13 +12,13 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
+@Component
 @JsonPropertyOrder({
         "cik",
         "symbol"
 })
-@Data
-@Component
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CompanyFinancialReportResponse {
 
     @JsonProperty("cik")

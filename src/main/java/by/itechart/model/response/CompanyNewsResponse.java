@@ -12,7 +12,8 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
+@Component
 @JsonPropertyOrder({
         "category",
         "datetime",
@@ -24,8 +25,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "summary",
         "url"
 })
-@Data
-@Component
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CompanyNewsResponse {
 
     @JsonProperty("category")

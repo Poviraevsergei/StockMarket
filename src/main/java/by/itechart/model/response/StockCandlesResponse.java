@@ -13,7 +13,8 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
+@Component
 @JsonPropertyOrder({
         "c",
         "h",
@@ -23,8 +24,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "t",
         "v"
 })
-@Data
-@Component
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class StockCandlesResponse {
 
     @JsonProperty("c")

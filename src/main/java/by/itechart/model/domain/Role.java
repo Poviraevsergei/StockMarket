@@ -2,18 +2,16 @@ package by.itechart.model.domain;
 
 import lombok.Data;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import javax.persistence.Id;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Column;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
-@Entity
 @Data
+@Entity
 public class Role implements Serializable {
 
     @Id
@@ -24,6 +22,5 @@ public class Role implements Serializable {
     private Boolean isActive;
 
     @Column
-    @Temporal(TemporalType.DATE)
-    private Date expiryDate;
+    private Timestamp expiryDate;
 }
