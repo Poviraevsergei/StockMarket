@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
         Security security = new Security();
         security.setLogin(createUserRequest.getLogin());
         security.setPassword(createUserRequest.getPassword());
-        security.setUserRole("USER");
+        security.setUserRole("ROLE_USER");
         Status status = new Status();
         status.setIsActive(false);
         status.setExpiryDate(Timestamp.valueOf(LocalDateTime.now()));

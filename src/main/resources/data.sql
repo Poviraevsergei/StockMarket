@@ -9,9 +9,9 @@ VALUES (true, '2020-10-14'),
        (true, '2021-10-10');
 
 INSERT INTO SECURITY (login, password, user_role)
-VALUES ('admin', 'admin', 'ADMIN'),
-       ('login2', 'password2', 'USER'),
-       ('login3', 'password3', 'USER');
+VALUES ('admin', 'admin', 'ROLE_ADMIN'),
+       ('user', 'user', 'ROLE_USER'),
+       ('login3', 'password3', 'ROLE_USER');
 
 INSERT INTO COMPANY (name, ticker, industry, phone, url, logo)
 VALUES ('Apple Inc', 'AAPL', 'Technology', '14089961010', 'https://www.apple.com/',
