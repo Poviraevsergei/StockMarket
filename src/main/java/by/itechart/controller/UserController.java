@@ -1,6 +1,7 @@
 package by.itechart.controller;
 
 import by.itechart.model.domain.User;
+import by.itechart.model.response.CreateUserRequest;
 import lombok.RequiredArgsConstructor;
 import by.itechart.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,8 +35,8 @@ public class UserController {
     }
 
     @PostMapping(value = "/create")
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public User createUser(@RequestBody CreateUserRequest createUserRequest) {
+        return userService.createUser(createUserRequest);
     }
 
     @PutMapping("/update")

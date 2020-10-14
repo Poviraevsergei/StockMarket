@@ -43,7 +43,7 @@ public class ScheduleService {
     private final StockServiceFeign stockServiceFeign;
     private final JavaMailSender javaMailSender;
 
-    @Scheduled(cron = ("*/10 * * * * *"))
+    @Scheduled(cron = (CRON_ONE_TIME_TO_DAY))
     private void updateStockData() {
         Optional<List<Company>> allCompanies = Optional.ofNullable(companyService.findAllCompanyFromDb());
         if (allCompanies.isEmpty()) {
@@ -88,11 +88,15 @@ public class ScheduleService {
         return !dividends.equals("null") ? dividends : "-";
     }
 
-    @Scheduled(cron = ("*/10 * * * * *"))
+    @Scheduled(cron = (CRON_ONE_TIME_TO_DAY))
     private void checkUserStatus() {
-        List<User> allUsers = userService.findAllUsers();
-        for (User user : allUsers) {
-            Timestamp expiryUserTime = user.getRole().getExpiryDate();
+        Optional<List<User>> allUsers = Optional.ofNullable(userService.findAllUsers());
+        if (allUsers.isEmpty()) {
+            log.warn("userService.findAllUsers() return empty list!");
+            return;
+        }
+        for (User user : allUsers.get()) {
+            Timestamp expiryUserTime = user.getStatus().getExpiryDate();
             Timestamp timeToday = Timestamp.valueOf(ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS).toLocalDateTime());
             Timestamp timeTodayPlusThreeDays = Timestamp.valueOf(timeToday.toLocalDateTime().plusDays(3));
             if (expiryUserTime.getTime() >= timeToday.getTime()) {
@@ -103,8 +107,8 @@ public class ScheduleService {
                             (daysDifference == 0L ? " today." : " after " + daysDifference + (daysDifference == 1L ? " day." : " days.")));
                 }
             } else {
-                if (user.getRole().getIsActive()) {
-                    user.getRole().setIsActive(false);
+                if (user.getStatus().getIsActive()) {
+                    user.getStatus().setIsActive(false);
                     log.info("User with id=" + user.getId() + " got status = false.");
                     userService.updateUser(user);
                 }
@@ -113,7 +117,7 @@ public class ScheduleService {
     }
 
     private void sendReminderMailToUser(User user, Long daysDifference) {
-        final String MAIL_TEXT = "Dear " + user.getLogin() + ", your subscription from stock-market.com will be blocked" +
+        final String MAIL_TEXT = "Dear " + user.getSecurity().getLogin() + ", your subscription from stock-market.com will be blocked" +
                 (daysDifference == 0L ? " today." : " after " + daysDifference +
                         (daysDifference == 1L ? " day." : " days.")) + " We recommend paying attention to this."
                 + System.lineSeparator() + "Best regards, support team stock-market.com.";

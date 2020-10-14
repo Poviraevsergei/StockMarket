@@ -1,12 +1,17 @@
-INSERT INTO USER (login, password, email, created, changed)
-VALUES ('poviraev', 'pass1', 'poviraevsergei@gmail.com', '1970-01-01 00:00:01', '1970-01-01 00:00:01'),
-       ('Carl', 'pass2', 'poviraevsergei@gmail.com', '1970-01-01 00:00:01', '1970-01-01 00:00:01'),
-       ('Sasha', 'pass3', 'email3', '1970-01-01 00:00:01', '1970-01-01 00:00:01');
+INSERT INTO USER (email, created, changed)
+VALUES ('poviraevsergei@gmail.com', '1970-01-01 00:00:01', '1970-01-01 00:00:01'),
+       ('poviraei@gmail.com', '1970-01-01 00:00:01', '1970-01-01 00:00:01'),
+       ('email3', '1970-01-01 00:00:01', '1970-01-01 00:00:01');
 
-INSERT INTO ROLE (is_active, expiry_date)
+INSERT INTO STATUS (is_active, expiry_date)
 VALUES (true, '2020-10-14'),
        (true, '2020-10-13'),
        (true, '2021-10-10');
+
+INSERT INTO SECURITY (login, password, user_role)
+VALUES ('admin', 'admin', 'ADMIN'),
+       ('login2', 'password2', 'USER'),
+       ('login3', 'password3', 'USER');
 
 INSERT INTO COMPANY (name, ticker, industry, phone, url, logo)
 VALUES ('Apple Inc', 'AAPL', 'Technology', '14089961010', 'https://www.apple.com/',

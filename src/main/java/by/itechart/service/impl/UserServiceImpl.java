@@ -1,10 +1,13 @@
 package by.itechart.service.impl;
 
-import by.itechart.model.domain.Role;
+import by.itechart.model.domain.Status;
+import by.itechart.model.domain.Security;
 import by.itechart.model.domain.User;
+import by.itechart.model.response.CreateUserRequest;
 import lombok.RequiredArgsConstructor;
 import by.itechart.service.UserService;
 import by.itechart.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserServiceImpl implements UserService {
@@ -30,11 +34,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(User user) {
-        Role role = new Role();
-        role.setIsActive(false);
-        role.setExpiryDate(Timestamp.valueOf(LocalDateTime.now()));
-        user.setRole(role);
+    public User createUser(CreateUserRequest createUserRequest) {
+        Security security = new Security();
+        security.setLogin(createUserRequest.getLogin());
+        security.setPassword(createUserRequest.getPassword());
+        security.setUserRole("USER");
+        Status status = new Status();
+        status.setIsActive(false);
+        status.setExpiryDate(Timestamp.valueOf(LocalDateTime.now()));
+        User user = new User();
+        user.setEmail(createUserRequest.getEmail());
+        user.setChanged(Timestamp.valueOf(LocalDateTime.now()));
+        user.setCreated(Timestamp.valueOf(LocalDateTime.now()));
+        user.setStatus(status);
+        user.setSecurity(security);
         return userRepository.save(user);
     }
 

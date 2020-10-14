@@ -12,7 +12,7 @@ import javax.persistence.GenerationType;
 
 @Data
 @Entity
-public class Role implements Serializable {
+public class Status implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
