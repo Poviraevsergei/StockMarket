@@ -29,7 +29,7 @@ public class CompanyController {
     private final CompanyServiceFeign companyServiceFeign;
     private final CompanyService companyService;
 
-    @GetMapping("/getCompanyByTicker/{ticker}")
+    @GetMapping("/getCompanyfromDb/{ticker}")
     public Company getCompanyByTicker(@PathVariable String ticker) {
         return companyService.findCompanyFromDbByTicker(ticker);
     }
@@ -44,8 +44,8 @@ public class CompanyController {
         return companyServiceFeign.getAllCompanies();
     }
 
-    @GetMapping("/getCompany")
-    public CompanyResponse getCompany(String ticker) {
+    @GetMapping("/getCompany/{ticker}")
+    public CompanyResponse getCompany(@PathVariable String ticker) {
         return companyServiceFeign.getCompany(ticker);
     }
 

@@ -4,14 +4,14 @@ VALUES ('poviraevsergei@gmail.com', '1970-01-01 00:00:01', '1970-01-01 00:00:01'
        ('email3', '1970-01-01 00:00:01', '1970-01-01 00:00:01');
 
 INSERT INTO STATUS (is_active, expiry_date)
-VALUES (true, '2020-10-14'),
-       (true, '2020-10-13'),
-       (true, '2021-10-10');
+VALUES (false, '2020-10-19'),
+       (false, '2020-10-13'),
+       (false, '2020-10-13');
 
 INSERT INTO SECURITY (login, password, user_role)
-VALUES ('admin', 'admin', 'ROLE_ADMIN'),
-       ('user', 'user', 'ROLE_USER'),
-       ('login3', 'password3', 'ROLE_USER');
+VALUES ('admin', '$2a$10$fkiMk4wRHS0QePoYmRnnSuoaSLVPRPyeHvknNM/vImuh33dkRWVKW', 'ROLE_ADMIN'),
+       ('user', '$2a$10$Fa6c00NBgAw8cXcFlVtqPe710kGnWZnejFSsdQduAt2qR6HmIQabW', 'ROLE_USER'),
+       ('login3', '$2a$10$Fa6c00NBgAw8cXcFlVtqPe710kGnWZnejFSsdQduAt2qR6HmIQabW', 'ROLE_USER');
 
 INSERT INTO COMPANY (name, ticker, industry, phone, url, logo)
 VALUES ('Apple Inc', 'AAPL', 'Technology', '14089961010', 'https://www.apple.com/',

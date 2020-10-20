@@ -1,22 +1,22 @@
 package by.itechart.controller;
 
 import by.itechart.model.domain.Stock;
-import lombok.RequiredArgsConstructor;
-import by.itechart.service.StockService;
-import by.itechart.model.response.StockCandlesResponse;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import by.itechart.service.serviceFeign.StockServiceFeign;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
 import by.itechart.model.response.CompanyStockForTheDayResponse;
 import by.itechart.model.response.CompanyStockForTheYearResponse;
+import by.itechart.model.response.StockCandlesResponse;
+import by.itechart.service.StockService;
+import by.itechart.service.serviceFeign.StockServiceFeign;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;

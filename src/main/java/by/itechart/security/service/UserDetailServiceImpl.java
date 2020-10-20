@@ -26,7 +26,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
         if (security.isEmpty()) {
             log.info("Method:loadUserByUsername. Security is empty!");
         }
-
         return new org.springframework.security.core.userdetails.User(
                 security.get().getLogin(),
                 security.get().getPassword(),

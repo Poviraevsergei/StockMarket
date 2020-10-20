@@ -34,6 +34,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
+    }
+
+    @Override
     public User createUser(CreateUserRequest createUserRequest) {
         Security security = new Security();
         security.setLogin(createUserRequest.getLogin());
