@@ -1,6 +1,7 @@
 package by.itechart.service;
 
 import by.itechart.model.domain.User;
+import by.itechart.model.response.CreateUserRequest;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +12,9 @@ public interface UserService {
 
     Optional<User> findUserById(Long id);
 
-    User createUser(User user);
+    Optional<User> findUserByEmail(String email);
+
+    User createUser(CreateUserRequest CreateUserRequest);
 
     User updateUser(User user);
 

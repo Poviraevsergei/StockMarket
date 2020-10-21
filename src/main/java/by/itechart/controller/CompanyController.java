@@ -4,13 +4,13 @@ import lombok.RequiredArgsConstructor;
 import by.itechart.model.domain.Company;
 import by.itechart.service.CompanyService;
 import by.itechart.model.response.CompanyResponse;
-import by.itechart.serviceFeign.CompanyServiceFeign;
 import by.itechart.model.response.CompanyNewsResponse;
 import by.itechart.model.response.AllCompaniesResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import by.itechart.service.serviceFeign.CompanyServiceFeign;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +29,7 @@ public class CompanyController {
     private final CompanyServiceFeign companyServiceFeign;
     private final CompanyService companyService;
 
-    @GetMapping("/getCompanyByTicker/{ticker}")
+    @GetMapping("/getCompanyfromDb/{ticker}")
     public Company getCompanyByTicker(@PathVariable String ticker) {
         return companyService.findCompanyFromDbByTicker(ticker);
     }
@@ -44,8 +44,8 @@ public class CompanyController {
         return companyServiceFeign.getAllCompanies();
     }
 
-    @GetMapping("/getCompany")
-    public CompanyResponse getCompany(String ticker) {
+    @GetMapping("/getCompany/{ticker}")
+    public CompanyResponse getCompany(@PathVariable String ticker) {
         return companyServiceFeign.getCompany(ticker);
     }
 

@@ -1,8 +1,7 @@
-package by.itechart.serviceFeign;
+package by.itechart.service.serviceFeign;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
 import by.itechart.model.response.CompanyResponse;
 import by.itechart.model.response.CompanyNewsResponse;
 import org.springframework.cloud.openfeign.FeignClient;
