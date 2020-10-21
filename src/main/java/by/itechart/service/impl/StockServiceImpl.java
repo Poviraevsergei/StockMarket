@@ -19,19 +19,20 @@ public class StockServiceImpl implements StockService {
     private final CompanyRepository companyRepository;
 
     @Override
-    public Stock createStock(Stock stock) {
-        stock.setCompany(companyRepository.findCompaniesByTicker(stock.getTicker()));
-        return stockRepository.save(stock);
-    }
-
-    @Override
-    public List<Stock> findAllStock() {
-        return (List<Stock>) stockRepository.findAll();
+    public Optional<List<Stock>> findAllStock() {
+        List<Stock> allStocks = (List<Stock>) stockRepository.findAll();
+        return Optional.of(allStocks);
     }
 
     @Override
     public Optional<Stock> findById(Long id) {
         return stockRepository.findById(id);
+    }
+
+    @Override
+    public Stock createStock(Stock stock) {
+        stock.setCompany(companyRepository.findCompaniesByTicker(stock.getTicker()));
+        return stockRepository.save(stock);
     }
 
     @Override

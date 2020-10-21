@@ -17,13 +17,15 @@ public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
 
     @Override
-    public List<Company> findAllCompanyFromDb() {
-        return (List<Company>) companyRepository.findAll();
+    public Optional<List<Company>> findAllCompanyFromDb() {
+        List<Company> allCompanies = (List<Company>) companyRepository.findAll();
+        return Optional.of(allCompanies);
     }
 
     @Override
-    public Company findCompanyFromDbByTicker(String ticker) {
-        return companyRepository.findCompaniesByTicker(ticker);
+    public Optional<Company> findCompanyFromDbByTicker(String ticker) {
+        Company allCcompanies = companyRepository.findCompaniesByTicker(ticker);
+        return Optional.of(allCcompanies);
     }
 
     @Override

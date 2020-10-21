@@ -19,5 +19,5 @@ public interface StockServiceFeign {
     Optional<CompanyStockForTheYearResponse> getCompanyStockForTheYear(@PathVariable String ticker);
 
     @GetMapping("/stock/candle?symbol={ticker}&resolution={resolution}&from={from}&to={to}&token=btqbebn48v6t9hdd6cog")
-    StockCandlesResponse getStockCandles(@PathVariable String ticker, @PathVariable String from, @PathVariable String to, @PathVariable String resolution);
+    Optional<StockCandlesResponse> getStockCandles(@PathVariable String ticker, @PathVariable String from, @PathVariable String to, @PathVariable String resolution);
 }
