@@ -74,7 +74,7 @@ class StockControllerTest {
     void findAllStock() throws Exception {
         List<Stock> resultList = new ArrayList<>();
         resultList.add(stock);
-        when(stockService.findAllStock()).thenReturn(resultList);
+        when(stockService.findAllStock()).thenReturn(Optional.of(resultList));
 
         mockMvc.perform(get("/stock/getAllStocks"))
                 .andExpect(jsonPath("$", hasSize(1)))
@@ -119,7 +119,7 @@ class StockControllerTest {
 
     @Test
     void getStockCandles() throws Exception {
-        when(stockServiceFeign.getStockCandles(anyString(), anyString(), anyString(), anyString())).thenReturn(stockCandlesResponse);
+        when(stockServiceFeign.getStockCandles(anyString(), anyString(), anyString(), anyString())).thenReturn(Optional.ofNullable(stockCandlesResponse));
 
         mockMvc.perform(get("/stock/getStockCandles?ticker=TSLA&from=2020-02-02&to=2020-09-09&resolution=1"))
                 .andExpect(status().isOk())

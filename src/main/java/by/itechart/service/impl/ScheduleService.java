@@ -42,7 +42,7 @@ public class ScheduleService {
 
     @Scheduled(cron = (CRON_ONE_TIME_TO_DAY))
     private void updateStockData() {
-        Optional<List<Company>> allCompanies = Optional.ofNullable(companyService.findAllCompanyFromDb());
+        Optional<List<Company>> allCompanies = companyService.findAllCompanyFromDb();
         if (allCompanies.isEmpty()) {
             log.warn("companyService.findAllCompanyFromDb() return empty list!");
             return;
@@ -87,7 +87,7 @@ public class ScheduleService {
 
     @Scheduled(cron = (CRON_ONE_TIME_TO_DAY))
     private void checkUserStatus() {
-        Optional<List<User>> allUsers = Optional.ofNullable(userService.findAllUsers());
+        Optional<List<User>> allUsers = userService.findAllUsers();
         if (allUsers.isEmpty()) {
             log.warn("userService.findAllUsers() return empty list!");
             return;

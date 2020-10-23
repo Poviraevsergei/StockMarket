@@ -7,11 +7,11 @@ import java.util.Optional;
 
 public interface StockService {
 
-    Stock createStock(Stock stock);
-
-    List<Stock> findAllStock();
+    Optional<List<Stock>> findAllStock();
 
     Optional<Stock> findById(Long id);
+
+    Stock createStock(Stock stock);
 
     Stock updateStock(Stock stock);
 

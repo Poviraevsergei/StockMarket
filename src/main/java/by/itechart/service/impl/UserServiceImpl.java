@@ -24,8 +24,9 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public List<User> findAllUsers() {
-        return (List<User>) userRepository.findAll();
+    public Optional<List<User>> findAllUsers() {
+        List<User> users = (List<User>) userRepository.findAll();
+        return Optional.of(users);
     }
 
     @Override

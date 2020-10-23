@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public interface CompanyService {
 
-    List<Company> findAllCompanyFromDb();
+    Optional<List<Company>> findAllCompanyFromDb();
 
-    Company findCompanyFromDbByTicker(String ticker);
+    Optional<Company> findCompanyFromDbByTicker(String ticker);
 
     Optional<Company> findCompanyById(Long id);
 

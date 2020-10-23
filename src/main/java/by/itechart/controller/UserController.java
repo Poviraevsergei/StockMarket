@@ -1,10 +1,15 @@
 package by.itechart.controller;
 
+import by.itechart.exception.CustomException;
+import by.itechart.exception.ResourceNotFoundException;
 import by.itechart.model.domain.User;
 import by.itechart.model.response.CreateUserRequest;
 import by.itechart.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,37 +20,52 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
+
+import static by.itechart.utils.ProjectProperties.USERS_NOT_FOUND;
+import static by.itechart.utils.ProjectProperties.USER_NOT_FOUND;
+import static by.itechart.utils.ProjectProperties.USER_WAS_NOT_CREATED;
+import static by.itechart.utils.ProjectProperties.USER_WAS_NOT_UPDATED;
 
 @RestController
-@RequestMapping("/user")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
 
     private final UserService userService;
 
     @GetMapping("/findAll")
-    public List<User> findAllUsers() {
-        return userService.findAllUsers();
+    public ResponseEntity<List<User>> findAllUsers() {
+        List<User> allUsers = userService.findAllUsers().orElseThrow(() -> new ResourceNotFoundException(USERS_NOT_FOUND));
+        return new ResponseEntity<>(allUsers, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public Optional<User> findUserById(@PathVariable Long id) {
-        return userService.findUserById(id);
+    public ResponseEntity<User> findUserById(@PathVariable Long id) {
+        User user = userService.findUserById(id).orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND));
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping(value = "/create")
-    public User createUser(@RequestBody CreateUserRequest createUserRequest) {
-        return userService.createUser(createUserRequest);
+    public ResponseEntity<User> createUser(@RequestBody CreateUserRequest createUserRequest) {
+        User user = userService.createUser(createUserRequest);
+        if (user == null) {
+            throw new CustomException(USER_WAS_NOT_CREATED);
+        }
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
-    public User updateUser(@RequestBody User user) {
-        return userService.updateUser(user);
+    public ResponseEntity<User> updateUser(@RequestBody User user) {
+        User resultUser = userService.updateUser(user);
+        if (resultUser == null) {
+            throw new CustomException(USER_WAS_NOT_UPDATED);
+        }
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    void deleteUserById(@PathVariable Long id) {
+    ResponseEntity<HttpStatus> deleteUserById(@PathVariable Long id) {
         userService.deleteUserById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
