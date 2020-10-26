@@ -25,6 +25,7 @@ import static by.itechart.utils.ProjectProperties.USERS_NOT_FOUND;
 import static by.itechart.utils.ProjectProperties.USER_NOT_FOUND;
 import static by.itechart.utils.ProjectProperties.USER_WAS_NOT_CREATED;
 import static by.itechart.utils.ProjectProperties.USER_WAS_NOT_UPDATED;
+import static by.itechart.utils.ProjectProperties.ADD_COMPANY_TO_ACCOUNT_EXCEPTION;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -42,6 +43,12 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<User> findUserById(@PathVariable Long id) {
         User user = userService.findUserById(id).orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND));
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/addCompany")
+    public ResponseEntity<User> addCompanyToAccount(String ticker) {
+        User user = userService.addCompanyToAccount(ticker).orElseThrow(() -> new ResourceNotFoundException(ADD_COMPANY_TO_ACCOUNT_EXCEPTION));
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 

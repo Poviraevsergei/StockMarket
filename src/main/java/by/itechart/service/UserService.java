@@ -14,6 +14,10 @@ public interface UserService {
 
     Optional<User> findUserByEmail(String email);
 
+    Optional<User> changeToPremium(String userLogin);
+
+    Optional<User> addCompanyToAccount(String ticker);
+
     User createUser(CreateUserRequest CreateUserRequest);
 
     User updateUser(User user);

@@ -2,9 +2,9 @@ package by.itechart.model.domain;
 
 import lombok.Data;
 
-import java.sql.Timestamp;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -22,5 +22,5 @@ public class Status implements Serializable {
     private Boolean isActive;
 
     @Column
-    private Timestamp expiryDate;
+    private LocalDate expiryDate;
 }

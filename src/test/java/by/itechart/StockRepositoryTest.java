@@ -7,8 +7,7 @@ import by.itechart.repository.StockRepository;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -34,7 +33,7 @@ public class StockRepositoryTest {
         stock.setClosePrice("113.02");
         stock.setTicker("MCDS");
         stock.setOpenPrice("2020-10-05");
-        stock.setDate(Timestamp.valueOf(LocalDateTime.now()));
+        stock.setDate(LocalDate.now());
         stock.setAnnualDividends("0.75");
         stock.setLowestAnnualPrice("53.1525");
         stock.setHighestAnnualPrice("153.1525");

@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import java.sql.Timestamp;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.time.LocalDate;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,14 +21,10 @@ import javax.persistence.GenerationType;
 @Data
 @Table
 @Entity
-@ToString(exclude = {
-        "company"
-})
-@EqualsAndHashCode(exclude = {
-        "company"
-})
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = {"company"})
+@EqualsAndHashCode(exclude = {"company"})
 public class Stock implements Serializable {
 
     @Id
@@ -50,7 +46,7 @@ public class Stock implements Serializable {
     private String ticker;
 
     @Column
-    private Timestamp date;
+    private LocalDate date;
 
     @Column
     private String annualDividends;

@@ -8,6 +8,7 @@ import by.itechart.repository.StockRepository;
 import by.itechart.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +28,11 @@ public class StockServiceImpl implements StockService {
     @Override
     public Optional<Stock> findById(Long id) {
         return stockRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Stock> findByDateAndTicker(LocalDate date, String ticker) {
+        return stockRepository.findByDateAndTicker(date, ticker);
     }
 
     @Override
