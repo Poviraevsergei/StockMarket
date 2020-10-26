@@ -17,17 +17,17 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
+import java.time.Period;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 import static by.itechart.utils.ProjectProperties.HIGHEST_ANNUAL_PRICE;
 import static by.itechart.utils.ProjectProperties.LOWEST_ANNUAL_PRICE;
 import static by.itechart.utils.ProjectProperties.DIVIDEND_PER_SHARE_ANNUAL;
 import static by.itechart.utils.ProjectProperties.CRON_ONE_TIME_TO_DAY;
+import static by.itechart.utils.ProjectProperties.ROLE_USER;
 
 @Slf4j
 @Service
@@ -72,7 +72,7 @@ public class ScheduleService {
         stock.setHighestAnnualPrice(String.valueOf(companyStockForTheYear.getAdditionalProperties().get(HIGHEST_ANNUAL_PRICE)));
         stock.setLowestAnnualPrice(String.valueOf(companyStockForTheYear.getAdditionalProperties().get(LOWEST_ANNUAL_PRICE)));
         stock.setAnnualDividends(annualDividends);
-        stock.setDate(Timestamp.valueOf(LocalDateTime.now()));
+        stock.setDate(LocalDate.now());
         stock.setOpenPrice(companyStockForTheDay.getOpenPrice());
         stock.setClosePrice(companyStockForTheDay.getPreviousPrice());
         stock.setCompany(company);
@@ -80,7 +80,7 @@ public class ScheduleService {
         return result != null;
     }
 
-    private String getDividends(CompanyStockForTheYearResponse companyStockForTheYear) {
+    public String getDividends(CompanyStockForTheYearResponse companyStockForTheYear) {
         String dividends = String.valueOf(companyStockForTheYear.getAdditionalProperties().get(DIVIDEND_PER_SHARE_ANNUAL));
         return !dividends.equals("null") ? dividends : "-";
     }
@@ -93,20 +93,21 @@ public class ScheduleService {
             return;
         }
         for (User user : allUsers.get()) {
-            Timestamp expiryUserTime = user.getStatus().getExpiryDate();
-            Timestamp timeToday = Timestamp.valueOf(ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS).toLocalDateTime());
-            Timestamp timeTodayPlusThreeDays = Timestamp.valueOf(timeToday.toLocalDateTime().plusDays(3));
-            if (expiryUserTime.getTime() >= timeToday.getTime()) {
-                if (timeTodayPlusThreeDays.after(expiryUserTime)) {
-                    long daysDifference = TimeUnit.DAYS.convert(expiryUserTime.getTime() - timeToday.getTime(), TimeUnit.MILLISECONDS);
-                    sendMail.sendReminderMailToUser(user, daysDifference);
+            LocalDate expiryUserTime = user.getStatus().getExpiryDate();
+            LocalDate timeToday = LocalDate.now();
+            LocalDate timeTodayPlusThreeDays = LocalDate.now().plusDays(3);
+            if (expiryUserTime.isAfter(timeToday.minusDays(1))) {
+                if (timeTodayPlusThreeDays.isAfter(expiryUserTime.minusDays(1))) {
+                    Period period = Period.between(timeToday, expiryUserTime);
+                    long daysDifference = Long.valueOf(period.getDays());
                     log.info("User with id=" + user.getId() + " will receive status = false" +
                             (daysDifference == 0L ? " today." : " after " + daysDifference + (daysDifference == 1L ? " day." : " days.")));
                 }
             } else {
                 if (user.getStatus().getIsActive()) {
                     user.getStatus().setIsActive(false);
-                    log.info("User with id=" + user.getId() + " got status = false.");
+                    user.getSecurity().setUserRole(ROLE_USER);
+                    log.info("User with id=" + user.getId() + " got status = false. Role = USER.");
                     userService.updateUser(user);
                 }
             }

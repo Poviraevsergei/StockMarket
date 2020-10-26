@@ -8,6 +8,8 @@ public class ProjectProperties {
     public final static String STOCK_MARKET_MAIL_ADDRESS = "stockitechart@gmail.com";
     public final static String MAIL_SUBJECT = "Announcement from stock-market.com";
     public final static String EMAIL = "email";
+    public final static String ROLE_USER = "ROLE_USER";
+    public final static String ROLE_CLIENT = "ROLE_CLIENT";
     public final static String COMPANY_NOT_FOUND = "Company not found!";
     public final static String COMPANIES_NOT_FOUND = "Companies not found!";
     public final static String COMPANY_NEWS_NOT_FOUND = "Company news not found!";
@@ -24,4 +26,8 @@ public class ProjectProperties {
     public final static String STOCK_WAS_NOT_CREATED = "Stock wasn't created!";
     public final static String STOCK_WAS_NOT_UPDATED = "Stock wasn't updated!";
     public final static String STOCK_CANDLES_NOT_UPDATED = "Stock candles not found!";
+    public final static String COMPARISON_EXCEPTION = "Exception in comparison method!";
+    public final static String COMPARISON_FOR_THE_YEAR_EXCEPTION = "Exception in comparisonForTheYear method!";
+    public final static String CHANGE_TO_PREMIUM_EXCEPTION = "Exception in changeToPremium method!";
+    public final static String ADD_COMPANY_TO_ACCOUNT_EXCEPTION = "Company wasn't added!";
 }

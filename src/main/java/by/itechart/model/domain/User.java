@@ -8,9 +8,9 @@ import lombok.AllArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import java.time.LocalDate;
 import java.util.Set;
 import java.util.HashSet;
-import java.sql.Timestamp;
 import javax.persistence.Id;
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -53,10 +53,10 @@ public class User implements Serializable {
     private String email;
 
     @Column
-    private Timestamp created;
+    private LocalDate created;
 
     @Column
-    private Timestamp changed;
+    private LocalDate changed;
 
     @ManyToMany
     @JsonManagedReference
