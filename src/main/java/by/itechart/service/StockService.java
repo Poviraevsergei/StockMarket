@@ -2,9 +2,9 @@ package by.itechart.service;
 
 import by.itechart.model.domain.Stock;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDate;
 
 public interface StockService {
 

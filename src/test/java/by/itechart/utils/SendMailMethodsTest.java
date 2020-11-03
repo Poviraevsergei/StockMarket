@@ -1,22 +1,22 @@
 package by.itechart.utils;
 
-import by.itechart.model.domain.Security;
-import by.itechart.model.domain.User;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.InjectMocks;
+import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import by.itechart.model.domain.User;
 import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.api.BeforeEach;
+import by.itechart.model.domain.Security;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 
 @RunWith(MockitoJUnitRunner.class)
 class SendMailMethodsTest {

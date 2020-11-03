@@ -1,165 +1,184 @@
-/*
 package by.itechart.controller;
 
+import org.mockito.Mock;
+import org.mockito.InjectMocks;
+import org.junit.runner.RunWith;
 import org.junit.jupiter.api.Test;
 import by.itechart.model.domain.Stock;
+import org.mockito.MockitoAnnotations;
 import by.itechart.service.StockService;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.http.MediaType;
+import org.mockito.junit.MockitoJUnitRunner;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import by.itechart.model.response.StockCandlesResponse;
 import by.itechart.service.serviceFeign.StockServiceFeign;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import by.itechart.model.response.CompanyStockForTheDayResponse;
 import by.itechart.model.response.CompanyStockForTheYearResponse;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import org.springframework.test.web.servlet.MockMvc;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.anyLong;
+import static org.hamcrest.Matchers.allOf;
+import static org.mockito.Mockito.anyString;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static by.itechart.utils.ProjectProperties.TEST_TICKER;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
-import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-@WebMvcTest(value = StockController.class)
+@RunWith(MockitoJUnitRunner.class)
 class StockControllerTest {
-    @MockBean
+
+    @Mock
     private StockService stockService;
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
+    @Mock
     private StockServiceFeign stockServiceFeign;
 
-    private Stock stock;
-    private CompanyStockForTheDayResponse companyStockForTheDayResponse;
-    private CompanyStockForTheYearResponse companyStockForTheYearResponse;
-    private StockCandlesResponse stockCandlesResponse;
+    @InjectMocks
+    private StockController stockController;
+
+    protected MockMvc mvc;
+
+    private final Stock stock = new Stock();
 
     @BeforeEach
     void setUp() {
-        stock = new Stock();
-        companyStockForTheDayResponse = new CompanyStockForTheDayResponse();
-        companyStockForTheYearResponse = new CompanyStockForTheYearResponse();
-        stockCandlesResponse = new StockCandlesResponse();
+        MockitoAnnotations.initMocks(this);
+        this.mvc = MockMvcBuilders.standaloneSetup(stockController).build();
         stock.setOpenPrice("113.92");
         stock.setClosePrice("113.02");
         stock.setTicker("MCDS");
-        stock.setOpenPrice("2020-10-05");
         stock.setDate(LocalDate.now());
         stock.setAnnualDividends("0.75");
         stock.setLowestAnnualPrice("53.1525");
         stock.setHighestAnnualPrice("153.1525");
-        stock.setOpenPrice("137.98");
     }
 
     @Test
     void findAllStock() throws Exception {
-        List<Stock> resultList = new ArrayList<>();
-        resultList.add(stock);
-        when(stockService.findAllStock()).thenReturn(Optional.of(resultList));
+        List<Stock> list = new ArrayList<>();
+        list.add(stock);
+        when(stockService.findAllStock()).thenReturn(Optional.of(new ArrayList()));
 
-        mockMvc.perform(get("/stock/getAllStocks"))
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(content()
-                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-        verify(stockService).findAllStock();
+        MvcResult result = mvc.perform(get("/stock/getAllStocks"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON))
+                .andReturn();
+        assertThat(result.getResponse().getContentAsString(), allOf(notNullValue()));
+        verify(stockService, times(1)).findAllStock();
     }
 
     @Test
     void findById() throws Exception {
         when(stockService.findById(anyLong())).thenReturn(Optional.of(stock));
 
-        mockMvc.perform(get("/stock/{id}", 1))
+        MvcResult result = mvc.perform(get("/stock/{id}", anyLong()))
                 .andExpect(status().isOk())
-                .andExpect(content()
-                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
-        verify(stockService).findById(anyLong());
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andReturn();
+        assertThat(result.getResponse().getContentAsString(), allOf(notNullValue()));
+        verify(stockService, times(1)).findById(anyLong());
     }
 
     @Test
     void getCompanyStockForTheDay() throws Exception {
-        when(stockServiceFeign.getCompanyStockForTheDay(anyString())).thenReturn(Optional.ofNullable(companyStockForTheDayResponse));
+        when(stockServiceFeign.getCompanyStockForTheDay(anyString())).thenReturn(Optional.of(new CompanyStockForTheDayResponse()));
 
-        mockMvc.perform(get("/stock/getCompanyStockForTheDay?ticker=bla"))
+        MvcResult result = mvc.perform(get("/stock/getCompanyStockForTheDay")
+                .param("ticker", TEST_TICKER))
                 .andExpect(status().isOk())
-                .andExpect(content()
-                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
-        verify(stockServiceFeign).getCompanyStockForTheDay(anyString());
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andReturn();
+        assertThat(result.getResponse().getContentAsString(), allOf(notNullValue()));
+        verify(stockServiceFeign, times(1)).getCompanyStockForTheDay(anyString());
     }
 
     @Test
     void getCompanyStockForTheYear() throws Exception {
-        when(stockServiceFeign.getCompanyStockForTheYear(anyString())).thenReturn(Optional.ofNullable(companyStockForTheYearResponse));
+        when(stockServiceFeign.getCompanyStockForTheYear(anyString())).thenReturn(Optional.of(new CompanyStockForTheYearResponse()));
 
-        mockMvc.perform(get("/stock/getCompanyStockForTheYear?ticker=TSLA"))
+        MvcResult result = mvc.perform(get("/stock/getCompanyStockForTheYear")
+                .param("ticker", TEST_TICKER))
                 .andExpect(status().isOk())
-                .andExpect(content()
-                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
-        verify(stockServiceFeign).getCompanyStockForTheYear(anyString());
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andReturn();
+        assertThat(result.getResponse().getContentAsString(), allOf(notNullValue()));
+        verify(stockServiceFeign, times(1)).getCompanyStockForTheYear(anyString());
     }
 
     @Test
     void getStockCandles() throws Exception {
-        when(stockServiceFeign.getStockCandles(anyString(), anyString(), anyString(), anyString())).thenReturn(Optional.ofNullable(stockCandlesResponse));
+        when(stockServiceFeign.getStockCandles(anyString(), anyString(), anyString(), anyString())).thenReturn(Optional.of(new StockCandlesResponse()));
 
-        mockMvc.perform(get("/stock/getStockCandles?ticker=TSLA&from=2020-02-02&to=2020-09-09&resolution=1"))
+        MvcResult result = mvc.perform(get("/stock/getStockCandles")
+                .param("ticker", anyString())
+                .param("from", anyString())
+                .param("to", anyString())
+                .param("resolution", anyString()))
                 .andExpect(status().isOk())
-                .andExpect(content()
-                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
-        verify(stockServiceFeign).getStockCandles(anyString(), anyString(), anyString(), anyString());
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andReturn();
+        assertThat(result.getResponse().getContentAsString(), allOf(notNullValue()));
+        verify(stockServiceFeign, times(1)).getStockCandles(anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
     void createStock() throws Exception {
-        when(stockService.createStock(any())).thenReturn(stock);
+        when(stockService.createStock(any(Stock.class))).thenReturn(stock);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+        String requestJson = ow.writeValueAsString(new Stock());
 
-        mockMvc.perform(post("/stock/create")
-                .content(new ObjectMapper().writeValueAsString(stock))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content()
-                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$").exists());
+        MvcResult result = mvc.perform(post("/stock/create").contentType(APPLICATION_JSON)
+                .content(requestJson))
+                .andExpect(status().isCreated())
+                .andReturn();
+        assertThat(result.getResponse().getContentAsString(), allOf(notNullValue()));
+        verify(stockService, times(1)).createStock(any(Stock.class));
     }
 
     @Test
     void updateStock() throws Exception {
-        when(stockService.updateStock(stock)).thenReturn(stock);
+        when(stockService.updateStock(any(Stock.class))).thenReturn(stock);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+        String requestJson = ow.writeValueAsString(new Stock());
 
-        mockMvc.perform(put("/stock/update")
-                .content(new ObjectMapper().writeValueAsString(stock))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
+        MvcResult result = mvc.perform(put("/stock/update").contentType(APPLICATION_JSON)
+                .content(requestJson))
                 .andExpect(status().isOk())
-                .andExpect(content()
-                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$").exists());
-        verify(stockService).updateStock(any());
+                .andReturn();
+        assertThat(result.getResponse().getContentAsString(), allOf(notNullValue()));
+        verify(stockService, times(1)).updateStock(any(Stock.class));
     }
 
     @Test
     void deleteStock() throws Exception {
-        mockMvc.perform(delete("/stock/{id}", 1))
-                .andExpect(status().isOk());
-        verify(stockService).deleteStockById(anyLong());
+        MvcResult result = mvc.perform(delete("/stock/{id}", anyLong()))
+                .andExpect(status().isNoContent())
+                .andReturn();
+        verify(stockService, times(1)).deleteStockById(anyLong());
     }
-}*/
+}

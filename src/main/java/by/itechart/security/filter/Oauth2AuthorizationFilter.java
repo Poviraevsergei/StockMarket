@@ -1,29 +1,29 @@
 package by.itechart.security.filter;
 
 import by.itechart.model.domain.User;
-import by.itechart.model.response.CreateUserRequest;
-import by.itechart.security.service.UserDetailServiceImpl;
-import by.itechart.service.impl.UserServiceImpl;
-import by.itechart.utils.SendMailMethods;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.user.OAuth2User;
+import by.itechart.utils.SendMailMethods;
 import org.springframework.stereotype.Component;
+import by.itechart.service.impl.UserServiceImpl;
+import by.itechart.model.response.CreateUserRequest;
+import org.springframework.security.core.Authentication;
+import by.itechart.security.service.UserDetailServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 
+import java.io.IOException;
 import javax.servlet.Filter;
+import javax.servlet.FilterChain;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.ServletException;
-import javax.servlet.FilterChain;
-import java.io.IOException;
 
-import static by.itechart.config.BeanConfiguration.passwordEncoder;
 import static by.itechart.utils.ProjectProperties.EMAIL;
+import static by.itechart.config.BeanConfiguration.passwordEncoder;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

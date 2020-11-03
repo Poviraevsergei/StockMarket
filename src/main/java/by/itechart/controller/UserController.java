@@ -1,15 +1,14 @@
 package by.itechart.controller;
 
-import by.itechart.exception.CustomException;
-import by.itechart.exception.ResourceNotFoundException;
 import by.itechart.model.domain.User;
-import by.itechart.model.response.CreateUserRequest;
-import by.itechart.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import by.itechart.service.UserService;
 import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
+import by.itechart.exception.CustomException;
 import org.springframework.http.ResponseEntity;
+import by.itechart.model.response.CreateUserRequest;
+import by.itechart.exception.ResourceNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,12 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static by.itechart.utils.ProjectProperties.USERS_NOT_FOUND;
 import static by.itechart.utils.ProjectProperties.USER_NOT_FOUND;
+import static by.itechart.utils.ProjectProperties.USERS_NOT_FOUND;
 import static by.itechart.utils.ProjectProperties.USER_WAS_NOT_CREATED;
 import static by.itechart.utils.ProjectProperties.USER_WAS_NOT_UPDATED;
 import static by.itechart.utils.ProjectProperties.ADD_COMPANY_TO_ACCOUNT_EXCEPTION;
@@ -67,7 +67,7 @@ public class UserController {
         if (resultUser == null) {
             throw new CustomException(USER_WAS_NOT_UPDATED);
         }
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

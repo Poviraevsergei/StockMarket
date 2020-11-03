@@ -1,36 +1,36 @@
 package by.itechart.service.impl;
 
-import by.itechart.model.domain.Security;
-import by.itechart.model.domain.Status;
-import by.itechart.model.domain.User;
-import by.itechart.model.response.CreateUserRequest;
-import by.itechart.repository.UserRepository;
-import by.itechart.security.repository.SecurityRepository;
-import by.itechart.service.CompanyService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.InjectMocks;
+import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import by.itechart.model.domain.User;
 import org.mockito.MockitoAnnotations;
+import by.itechart.model.domain.Status;
+import org.junit.jupiter.api.BeforeEach;
+import by.itechart.model.domain.Security;
+import by.itechart.service.CompanyService;
 import org.mockito.junit.MockitoJUnitRunner;
+import by.itechart.repository.UserRepository;
+import by.itechart.model.response.CreateUserRequest;
+import by.itechart.security.repository.SecurityRepository;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
-import static by.itechart.utils.ProjectProperties.ROLE_CLIENT;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.hamcrest.Matchers.allOf;
 import static org.mockito.Mockito.anyString;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static by.itechart.utils.ProjectProperties.ROLE_CLIENT;
 
 @RunWith(MockitoJUnitRunner.class)
 class UserServiceImplTest {

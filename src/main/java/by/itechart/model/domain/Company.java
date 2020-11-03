@@ -25,14 +25,10 @@ import javax.persistence.GenerationType;
 @Data
 @Table
 @Entity
-@ToString(exclude = {
-        "companyStockes", "observers"
-})
-@EqualsAndHashCode(exclude = {
-        "companyStockes", "observers"
-})
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = {"companyStockes", "observers"})
+@EqualsAndHashCode(exclude = {"companyStockes", "observers"})
 public class Company implements Serializable {
 
     @Id

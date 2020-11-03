@@ -4,8 +4,8 @@ import by.itechart.model.domain.Stock;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.repository.CrudRepository;
 
-import java.time.LocalDate;
 import java.util.Optional;
+import java.time.LocalDate;
 
 @Repository
 public interface StockRepository extends CrudRepository<Stock, Long> {

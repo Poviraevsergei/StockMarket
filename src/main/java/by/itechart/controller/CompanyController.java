@@ -1,16 +1,16 @@
 package by.itechart.controller;
 
-import by.itechart.exception.CustomException;
-import by.itechart.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import by.itechart.model.domain.Company;
 import by.itechart.service.CompanyService;
+import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
+import by.itechart.exception.CustomException;
+import org.springframework.http.ResponseEntity;
 import by.itechart.model.response.CompanyResponse;
 import by.itechart.model.response.CompanyNewsResponse;
+import by.itechart.exception.ResourceNotFoundException;
 import by.itechart.model.response.AllCompaniesResponse;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,12 +25,12 @@ import by.itechart.model.response.CompanyFinancialReportResponse;
 
 import java.util.List;
 
-import static by.itechart.utils.ProjectProperties.COMPANIES_NOT_FOUND;
 import static by.itechart.utils.ProjectProperties.COMPANY_NOT_FOUND;
+import static by.itechart.utils.ProjectProperties.COMPANIES_NOT_FOUND;
 import static by.itechart.utils.ProjectProperties.COMPANY_NEWS_NOT_FOUND;
-import static by.itechart.utils.ProjectProperties.COMPANY_REPORTS_NOT_FOUND;
 import static by.itechart.utils.ProjectProperties.COMPANY_WAS_NOT_UPDATED;
 import static by.itechart.utils.ProjectProperties.COMPANY_WAS_NOT_CREATED;
+import static by.itechart.utils.ProjectProperties.COMPANY_REPORTS_NOT_FOUND;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -47,7 +47,7 @@ public class CompanyController {
         return new ResponseEntity<>(company, HttpStatus.OK);
     }
 
-    @GetMapping("/getAllComaniesFromDb")
+    @GetMapping("/getAllCompaniesFromDb")
     public ResponseEntity<List<Company>> getAllCompaniesFromDb() {
         List<Company> companies = companyService.findAllCompanyFromDb()
                 .orElseThrow(() -> new ResourceNotFoundException(COMPANIES_NOT_FOUND));
@@ -95,7 +95,7 @@ public class CompanyController {
         if (resultCompany == null) {
             throw new CustomException(COMPANY_WAS_NOT_CREATED);
         }
-        return new ResponseEntity<>(resultCompany, HttpStatus.OK);
+        return new ResponseEntity<>(resultCompany, HttpStatus.CREATED);
     }
 
     @PutMapping("/update")

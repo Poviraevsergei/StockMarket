@@ -1,37 +1,37 @@
 package by.itechart.controller;
 
-import by.itechart.exception.CustomException;
-import by.itechart.exception.ResourceNotFoundException;
 import by.itechart.model.domain.Stock;
-import by.itechart.model.response.CompanyStockForTheDayResponse;
-import by.itechart.model.response.CompanyStockForTheYearResponse;
-import by.itechart.model.response.StockCandlesResponse;
-import by.itechart.service.StockService;
-import by.itechart.service.serviceFeign.StockServiceFeign;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import by.itechart.service.StockService;
 import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
+import by.itechart.exception.CustomException;
 import org.springframework.http.ResponseEntity;
+import by.itechart.exception.ResourceNotFoundException;
+import by.itechart.model.response.StockCandlesResponse;
+import by.itechart.service.serviceFeign.StockServiceFeign;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import by.itechart.model.response.CompanyStockForTheDayResponse;
+import by.itechart.model.response.CompanyStockForTheYearResponse;
 
 import java.util.List;
 
-import static by.itechart.utils.ProjectProperties.STOCKS_NOT_FOUND;
 import static by.itechart.utils.ProjectProperties.STOCK_NOT_FOUND;
-import static by.itechart.utils.ProjectProperties.STOCK_CANDLES_NOT_UPDATED;
+import static by.itechart.utils.ProjectProperties.STOCKS_NOT_FOUND;
 import static by.itechart.utils.ProjectProperties.STOCK_WAS_NOT_CREATED;
 import static by.itechart.utils.ProjectProperties.STOCK_WAS_NOT_UPDATED;
+import static by.itechart.utils.ProjectProperties.STOCK_CANDLES_NOT_UPDATED;
 
-@RestController()
+@RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @RequestMapping(value = "/stock", produces = MediaType.APPLICATION_JSON_VALUE)
 public class StockController {
@@ -78,7 +78,7 @@ public class StockController {
         if (resultStock == null) {
             throw new CustomException(STOCK_WAS_NOT_CREATED);
         }
-        return new ResponseEntity<>(resultStock, HttpStatus.OK);
+        return new ResponseEntity<>(resultStock, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/update")

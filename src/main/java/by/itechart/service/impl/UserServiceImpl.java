@@ -1,29 +1,29 @@
 package by.itechart.service.impl;
 
-import by.itechart.exception.CustomException;
-import by.itechart.model.domain.Security;
-import by.itechart.model.domain.Status;
-import by.itechart.model.domain.User;
-import by.itechart.model.response.CreateUserRequest;
-import by.itechart.repository.UserRepository;
-import by.itechart.security.repository.SecurityRepository;
-import by.itechart.service.CompanyService;
-import by.itechart.service.UserService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import by.itechart.model.domain.User;
+import lombok.RequiredArgsConstructor;
+import by.itechart.model.domain.Status;
+import by.itechart.service.UserService;
+import by.itechart.model.domain.Security;
+import by.itechart.service.CompanyService;
+import by.itechart.repository.UserRepository;
+import by.itechart.exception.CustomException;
 import org.springframework.stereotype.Service;
+import by.itechart.model.response.CreateUserRequest;
+import by.itechart.security.repository.SecurityRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDate;
 
-import static by.itechart.utils.ProjectProperties.CHANGE_TO_PREMIUM_EXCEPTION;
-import static by.itechart.utils.ProjectProperties.ROLE_CLIENT;
 import static by.itechart.utils.ProjectProperties.ROLE_USER;
+import static by.itechart.utils.ProjectProperties.ROLE_CLIENT;
 import static by.itechart.utils.ProjectProperties.ADD_COMPANY_TO_ACCOUNT_EXCEPTION;
+import static by.itechart.utils.ProjectProperties.CHANGE_TO_PREMIUM_EXCEPTION;
 
 @Slf4j
 @Service
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> changeToPremium(String userLogin) {
         User user = userRepository.findById(securityRepository.findByLogin(userLogin).getId())
-                 .orElseThrow(() -> new CustomException(CHANGE_TO_PREMIUM_EXCEPTION));
+                .orElseThrow(() -> new CustomException(CHANGE_TO_PREMIUM_EXCEPTION));
         user.getStatus().setIsActive(true);
         user.getStatus().setExpiryDate(LocalDate.now().plusYears(1));
         user.getSecurity().setUserRole(ROLE_CLIENT);

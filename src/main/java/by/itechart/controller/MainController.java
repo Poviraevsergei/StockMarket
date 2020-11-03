@@ -1,23 +1,23 @@
 package by.itechart.controller;
 
-import by.itechart.exception.CustomException;
 import by.itechart.model.domain.User;
-import by.itechart.model.response.CreateUserRequest;
+import lombok.RequiredArgsConstructor;
 import by.itechart.service.UserService;
 import by.itechart.utils.SendMailMethods;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
+import by.itechart.exception.CustomException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
+import by.itechart.model.response.CreateUserRequest;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static by.itechart.utils.ProjectProperties.CHANGE_TO_PREMIUM_EXCEPTION;
 import static by.itechart.utils.ProjectProperties.USER_WAS_NOT_REGISTERED;
+import static by.itechart.utils.ProjectProperties.CHANGE_TO_PREMIUM_EXCEPTION;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -34,7 +34,7 @@ public class MainController {
             throw new CustomException(USER_WAS_NOT_REGISTERED);
         }
         sendMail.sendNewPasswordMailToUser(user, createUserRequest.getPassword());
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/changeToPremium")

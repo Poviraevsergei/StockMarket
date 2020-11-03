@@ -2,9 +2,9 @@ package by.itechart.model.domain;
 
 import lombok.Data;
 
+import java.time.LocalDate;
 import javax.persistence.Id;
 import java.io.Serializable;
-import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;

@@ -9,23 +9,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @Data
-@JsonPropertyOrder({
-        "country",
-        "currency",
-        "exchange",
-        "finnhubIndustry",
-        "ipo",
-        "logo",
-        "marketCapitalization",
-        "name",
-        "phone",
-        "shareOutstanding",
-        "ticker",
-        "weburl"
-})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CompanyResponse {
 

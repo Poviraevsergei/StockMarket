@@ -8,9 +8,9 @@ import lombok.AllArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import java.time.LocalDate;
 import java.util.Set;
 import java.util.HashSet;
+import java.time.LocalDate;
 import javax.persistence.Id;
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -25,16 +25,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.PrimaryKeyJoinColumn;
 
-@Entity
-@ToString(exclude = {
-        "userCompanies"
-})
-@EqualsAndHashCode(exclude = {
-        "userCompanies"
-})
 @Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = {"userCompanies"})
+@EqualsAndHashCode(exclude = {"userCompanies"})
 public class User implements Serializable {
 
     @Id

@@ -1,16 +1,16 @@
 package by.itechart.service.impl;
 
-import by.itechart.exception.CustomException;
 import by.itechart.model.domain.Stock;
-import by.itechart.model.response.ComparisonResponse;
-import by.itechart.service.OpenApiService;
-import by.itechart.service.StockService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import by.itechart.service.StockService;
+import by.itechart.service.OpenApiService;
+import by.itechart.exception.CustomException;
 import org.springframework.stereotype.Service;
+import by.itechart.model.response.ComparisonResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.LocalDate;
 import java.util.Optional;
+import java.time.LocalDate;
 
 import static by.itechart.utils.ProjectProperties.COMPARISON_EXCEPTION;
 import static by.itechart.utils.ProjectProperties.COMPARISON_FOR_THE_YEAR_EXCEPTION;
@@ -19,7 +19,6 @@ import static by.itechart.utils.ProjectProperties.COMPARISON_FOR_THE_YEAR_EXCEPT
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class OpenApiServiceImpl implements OpenApiService {
 
-    private final ComparisonResponse comparisonResponse;
     private final StockService stockService;
 
     @Override
@@ -37,6 +36,7 @@ public class OpenApiServiceImpl implements OpenApiService {
     }
 
     private ComparisonResponse compareStocks(Stock firstStock, Stock secondStock) {
+        ComparisonResponse comparisonResponse = new ComparisonResponse();
         comparisonResponse.setFirstOpenPrice(firstStock.getOpenPrice());
         comparisonResponse.setFirstClosePrice(firstStock.getClosePrice());
         comparisonResponse.setFirstTicker(firstStock.getTicker());

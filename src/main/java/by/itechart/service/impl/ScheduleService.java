@@ -1,33 +1,33 @@
 package by.itechart.service.impl;
 
-import by.itechart.model.response.CompanyStockForTheDayResponse;
-import by.itechart.model.response.CompanyStockForTheYearResponse;
-import by.itechart.utils.SendMailMethods;
 import lombok.extern.slf4j.Slf4j;
 import by.itechart.model.domain.User;
 import by.itechart.model.domain.Stock;
 import lombok.RequiredArgsConstructor;
 import by.itechart.service.UserService;
-import by.itechart.model.domain.Company;
 import by.itechart.service.StockService;
+import by.itechart.model.domain.Company;
+import by.itechart.utils.SendMailMethods;
 import by.itechart.service.CompanyService;
 import org.springframework.stereotype.Service;
 import by.itechart.service.serviceFeign.StockServiceFeign;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.beans.factory.annotation.Autowired;
+import by.itechart.model.response.CompanyStockForTheDayResponse;
+import by.itechart.model.response.CompanyStockForTheYearResponse;
 
+import java.util.List;
+import java.time.Period;
+import java.util.Optional;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
-import java.util.List;
-import java.util.Optional;
 
-import static by.itechart.utils.ProjectProperties.HIGHEST_ANNUAL_PRICE;
-import static by.itechart.utils.ProjectProperties.LOWEST_ANNUAL_PRICE;
-import static by.itechart.utils.ProjectProperties.DIVIDEND_PER_SHARE_ANNUAL;
-import static by.itechart.utils.ProjectProperties.CRON_ONE_TIME_TO_DAY;
 import static by.itechart.utils.ProjectProperties.ROLE_USER;
+import static by.itechart.utils.ProjectProperties.LOWEST_ANNUAL_PRICE;
+import static by.itechart.utils.ProjectProperties.CRON_ONE_TIME_TO_DAY;
+import static by.itechart.utils.ProjectProperties.HIGHEST_ANNUAL_PRICE;
+import static by.itechart.utils.ProjectProperties.DIVIDEND_PER_SHARE_ANNUAL;
 
 @Slf4j
 @Service
@@ -100,7 +100,7 @@ public class ScheduleService {
                 if (timeTodayPlusThreeDays.isAfter(expiryUserTime.minusDays(1))) {
                     Period period = Period.between(timeToday, expiryUserTime);
                     long daysDifference = Long.valueOf(period.getDays());
-                    sendMail.sendReminderMailToUser(user,daysDifference);
+                    sendMail.sendReminderMailToUser(user, daysDifference);
                     log.info("User with id=" + user.getId() + " will receive status = false" +
                             (daysDifference == 0L ? " today." : " after " + daysDifference + (daysDifference == 1L ? " day." : " days.")));
                 }

@@ -1,30 +1,30 @@
 package by.itechart.service.impl;
 
-import by.itechart.model.domain.Company;
-import by.itechart.repository.CompanyRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.InjectMocks;
+import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.api.BeforeEach;
+import by.itechart.model.domain.Company;
 import org.mockito.junit.MockitoJUnitRunner;
+import by.itechart.repository.CompanyRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.ArrayList;
 
-import static by.itechart.utils.ProjectProperties.TEST_TICKER;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.anyLong;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyLong;
+import static by.itechart.utils.ProjectProperties.TEST_TICKER;
 
 @RunWith(MockitoJUnitRunner.class)
 class CompanyServiceImplTest {

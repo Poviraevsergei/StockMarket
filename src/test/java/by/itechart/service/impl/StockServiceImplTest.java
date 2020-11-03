@@ -1,32 +1,32 @@
 package by.itechart.service.impl;
 
-import by.itechart.model.domain.Company;
-import by.itechart.model.domain.Stock;
-import by.itechart.repository.CompanyRepository;
-import by.itechart.repository.StockRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.InjectMocks;
+import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import by.itechart.model.domain.Stock;
 import org.mockito.MockitoAnnotations;
+import by.itechart.model.domain.Company;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.junit.MockitoJUnitRunner;
+import by.itechart.repository.StockRepository;
+import by.itechart.repository.CompanyRepository;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.allOf;
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.hamcrest.Matchers.allOf;
 import static org.mockito.Mockito.anyLong;
+import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.anyString;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 class StockServiceImplTest {

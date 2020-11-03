@@ -1,7 +1,7 @@
 package by.itechart.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 import java.sql.Timestamp;

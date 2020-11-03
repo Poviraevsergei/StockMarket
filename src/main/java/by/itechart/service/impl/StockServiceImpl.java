@@ -1,17 +1,17 @@
 package by.itechart.service.impl;
 
-import by.itechart.exception.CustomException;
 import by.itechart.model.domain.Stock;
 import lombok.RequiredArgsConstructor;
 import by.itechart.service.StockService;
+import by.itechart.exception.CustomException;
 import org.springframework.stereotype.Service;
 import by.itechart.repository.StockRepository;
 import by.itechart.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDate;
 
 import static by.itechart.utils.ProjectProperties.COMPANY_NOT_FOUND;
 
@@ -40,13 +40,13 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public Stock createStock(Stock stock) {
-        stock.setCompany(companyRepository.findCompaniesByTicker(stock.getTicker()).orElseThrow(()->new CustomException(COMPANY_NOT_FOUND)));
+        stock.setCompany(companyRepository.findCompaniesByTicker(stock.getTicker()).orElseThrow(() -> new CustomException(COMPANY_NOT_FOUND)));
         return stockRepository.save(stock);
     }
 
     @Override
     public Stock updateStock(Stock stock) {
-        stock.setCompany(companyRepository.findCompaniesByTicker(stock.getTicker()).orElseThrow(()->new CustomException(COMPANY_NOT_FOUND)));
+        stock.setCompany(companyRepository.findCompaniesByTicker(stock.getTicker()).orElseThrow(() -> new CustomException(COMPANY_NOT_FOUND)));
         return stockRepository.save(stock);
     }
 
