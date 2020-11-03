@@ -52,28 +52,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> changeToPremium(String userLogin) {
-        User user = userRepository.findUserById(securityRepository.findByLogin(userLogin).getId())
-                .orElseThrow(() -> new CustomException(CHANGE_TO_PREMIUM_EXCEPTION));
+        User user = userRepository.findById(securityRepository.findByLogin(userLogin).getId())
+                 .orElseThrow(() -> new CustomException(CHANGE_TO_PREMIUM_EXCEPTION));
         user.getStatus().setIsActive(true);
         user.getStatus().setExpiryDate(LocalDate.now().plusYears(1));
         user.getSecurity().setUserRole(ROLE_CLIENT);
-        userRepository.save(user);
-        return Optional.of(user);
+        return Optional.of(userRepository.save(user));
     }
 
     @Override
     public Optional<User> addCompanyToAccount(String ticker) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userRepository.findUserById(securityRepository.findByLogin(userDetails.getUsername()).getId())
+        User user = userRepository.findById(securityRepository.findByLogin(userDetails.getUsername()).getId())
                 .orElseThrow(() -> new CustomException(ADD_COMPANY_TO_ACCOUNT_EXCEPTION));
         if (user.getUserCompanies().size() >= 3 && user.getSecurity().getUserRole().equals(ROLE_USER)) {
             return Optional.of(user);
         }
         user.getUserCompanies().add(companyService.findCompanyFromDbByTicker(ticker)
                 .orElseThrow(() -> new CustomException(ADD_COMPANY_TO_ACCOUNT_EXCEPTION)));
-        userRepository.save(user);
-
-        return Optional.of(user);
+        return Optional.of(userRepository.save(user));
     }
 
     @Override

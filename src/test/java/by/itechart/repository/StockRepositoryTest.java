@@ -1,52 +1,61 @@
-package by.itechart;
+package by.itechart.repository;
 
-import org.junit.jupiter.api.Test;
 import by.itechart.model.domain.Stock;
 import org.junit.jupiter.api.BeforeEach;
-import by.itechart.repository.StockRepository;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 import java.util.List;
 
+import static by.itechart.utils.ProjectProperties.TEST_TICKER;
 import static org.hamcrest.MatcherAssert.assertThat;
-
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.nullValue;
 
-@SpringBootTest
-public class StockRepositoryTest {
+@DataJpaTest
+@RunWith(SpringRunner.class)
+class StockRepositoryTest {
 
     @Autowired
     private StockRepository stockRepository;
 
-    private Stock stock;
+    private final Stock stock = new Stock();
 
     @BeforeEach
     void setUp() {
-        stock = new Stock();
         stock.setOpenPrice("113.92");
         stock.setClosePrice("113.02");
         stock.setTicker("MCDS");
-        stock.setOpenPrice("2020-10-05");
         stock.setDate(LocalDate.now());
         stock.setAnnualDividends("0.75");
         stock.setLowestAnnualPrice("53.1525");
         stock.setHighestAnnualPrice("153.1525");
-        stock.setOpenPrice("137.98");
+    }
+
+    @Test
+    void findByDateAndTicker() {
+        Stock savedStock = stockRepository.save(stock);
+        Stock findStock = stockRepository.findByDateAndTicker(LocalDate.now(), stock.getTicker()).orElseThrow();
+
+        assertThat(findStock, is(notNullValue()));
+        assertThat(savedStock.getTicker(), is(findStock.getTicker()));
+        assertThat(savedStock.getDate(), is(findStock.getDate()));
     }
 
     @Test
     public void findAll() {
-        int userCountInDatabase = 3;
+        final int STOCKS_COUNT_IN_DATABASE = 5;
         List<Stock> resultList = (List<Stock>) stockRepository.findAll();
 
         assertThat(resultList, is(notNullValue()));
-        assertThat(resultList.size(), is(userCountInDatabase));
+        assertThat(resultList.size(), is(STOCKS_COUNT_IN_DATABASE));
     }
 
     @Test
@@ -60,10 +69,10 @@ public class StockRepositoryTest {
     @Test
     public void update() {
         Stock savedStock = stockRepository.save(stock);
-        savedStock.setTicker("TEST");
+        savedStock.setTicker(TEST_TICKER);
         Stock resultStock = stockRepository.save(savedStock);
 
-        assertThat(resultStock.getTicker(), is("TEST"));
+        assertThat(resultStock.getTicker(), is(TEST_TICKER));
     }
 
     @Test

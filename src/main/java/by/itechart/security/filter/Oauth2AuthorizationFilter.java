@@ -2,7 +2,8 @@ package by.itechart.security.filter;
 
 import by.itechart.model.domain.User;
 import by.itechart.model.response.CreateUserRequest;
-import by.itechart.service.UserService;
+import by.itechart.security.service.UserDetailServiceImpl;
+import by.itechart.service.impl.UserServiceImpl;
 import by.itechart.utils.SendMailMethods;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
@@ -23,15 +22,15 @@ import javax.servlet.ServletException;
 import javax.servlet.FilterChain;
 import java.io.IOException;
 
+import static by.itechart.config.BeanConfiguration.passwordEncoder;
 import static by.itechart.utils.ProjectProperties.EMAIL;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class Oauth2AuthorizationFilter implements Filter {
 
-    private final UserService userService;
-    private final UserDetailsService userDetailsService;
-    private final PasswordEncoder passwordEncoder;
+    private final UserServiceImpl userService;
+    private final UserDetailServiceImpl userDetailsService;
     private final SendMailMethods sendMail;
     private final String randomPassword = Long.toHexString(Double.doubleToLongBits(Math.random()));
 
@@ -54,7 +53,7 @@ public class Oauth2AuthorizationFilter implements Filter {
             CreateUserRequest createUserRequest = new CreateUserRequest();
             createUserRequest.setEmail(userEmail);
             createUserRequest.setLogin(userEmail);
-            createUserRequest.setPassword(passwordEncoder.encode(randomPassword));
+            createUserRequest.setPassword(passwordEncoder().encode(randomPassword));
             User user = userService.createUser(createUserRequest);
             if (user != null) {
                 sendMail.sendNewPasswordMailToUser(user, randomPassword);

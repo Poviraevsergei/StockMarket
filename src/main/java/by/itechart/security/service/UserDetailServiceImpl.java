@@ -1,5 +1,6 @@
 package by.itechart.security.service;
 
+import by.itechart.exception.CustomException;
 import by.itechart.model.domain.Security;
 import by.itechart.security.repository.SecurityRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import static by.itechart.utils.ProjectProperties.USER_DETAIL_NOT_FOUND;
+
 @Log4j2
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -25,6 +28,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         Optional<Security> security = Optional.ofNullable(securityRepository.findByLogin(login));
         if (security.isEmpty()) {
             log.info("Method:loadUserByUsername. Security is empty!");
+            throw new CustomException(USER_DETAIL_NOT_FOUND);
         }
         return new org.springframework.security.core.userdetails.User(
                 security.get().getLogin(),

@@ -33,14 +33,14 @@ import static by.itechart.utils.ProjectProperties.COMPANY_WAS_NOT_UPDATED;
 import static by.itechart.utils.ProjectProperties.COMPANY_WAS_NOT_CREATED;
 
 @RestController
-@RequestMapping(value = "/company", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequestMapping(value = "/company", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CompanyController {
 
     private final CompanyServiceFeign companyServiceFeign;
     private final CompanyService companyService;
 
-    @GetMapping("/getCompanyfromDb/{ticker}")
+    @GetMapping("/getCompanyFromDb/{ticker}")
     public ResponseEntity<Company> getCompanyByTicker(@PathVariable String ticker) {
         Company company = companyService.findCompanyFromDbByTicker(ticker)
                 .orElseThrow(() -> new ResourceNotFoundException(COMPANY_NOT_FOUND));

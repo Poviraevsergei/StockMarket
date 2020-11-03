@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import static by.itechart.utils.ProjectProperties.CHANGE_TO_PREMIUM_EXCEPTION;
 import static by.itechart.utils.ProjectProperties.USER_WAS_NOT_REGISTERED;
 
-@RestController()
+@RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 public class MainController {

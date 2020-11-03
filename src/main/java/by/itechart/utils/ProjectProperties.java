@@ -30,4 +30,6 @@ public class ProjectProperties {
     public final static String COMPARISON_FOR_THE_YEAR_EXCEPTION = "Exception in comparisonForTheYear method!";
     public final static String CHANGE_TO_PREMIUM_EXCEPTION = "Exception in changeToPremium method!";
     public final static String ADD_COMPANY_TO_ACCOUNT_EXCEPTION = "Company wasn't added!";
+    public final static String USER_DETAIL_NOT_FOUND = "UserDetails wasn't found!";
+    public final static String TEST_TICKER = "TEST";
 }

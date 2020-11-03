@@ -24,8 +24,8 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Optional<Company> findCompanyFromDbByTicker(String ticker) {
-        Company allCcompanies = companyRepository.findCompaniesByTicker(ticker);
-        return Optional.of(allCcompanies);
+        Optional<Company> company = companyRepository.findCompaniesByTicker(ticker);
+        return company;
     }
 
     @Override
@@ -40,7 +40,6 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Company updateCompany(Company company) {
-        company.setId(companyRepository.findCompaniesByTicker(company.getTicker()).getId());
         return companyRepository.save(company);
     }
 

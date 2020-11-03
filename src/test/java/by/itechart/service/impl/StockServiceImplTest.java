@@ -1,65 +1,58 @@
 package by.itechart.service.impl;
 
-import org.mockito.Mock;
-import org.mockito.InjectMocks;
-import org.junit.jupiter.api.Test;
-import by.itechart.model.domain.Stock;
 import by.itechart.model.domain.Company;
-import org.junit.jupiter.api.BeforeEach;
-import by.itechart.repository.StockRepository;
+import by.itechart.model.domain.Stock;
 import by.itechart.repository.CompanyRepository;
-import org.springframework.boot.test.context.SpringBootTest;
+import by.itechart.repository.StockRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.ArrayList;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.allOf;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.hamcrest.Matchers.allOf;
 import static org.mockito.Mockito.anyLong;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.anyString;
 
-@SpringBootTest
+@RunWith(MockitoJUnitRunner.class)
 class StockServiceImplTest {
 
     @Mock
-    StockRepository stockRepository;
+    private StockRepository stockRepository;
 
     @Mock
-    CompanyRepository companyRepository;
+    private CompanyRepository companyRepository;
 
     @InjectMocks
     private StockServiceImpl stockService;
 
-    private Stock stock;
+    private final Stock stock = new Stock();
+    private final Company company = new Company();
 
     @BeforeEach
     void setUp() {
-        stock = new Stock();
+        MockitoAnnotations.initMocks(this);
         stock.setOpenPrice("113.92");
         stock.setClosePrice("113.02");
         stock.setTicker("MCDS");
-        stock.setOpenPrice("2020-10-05");
         stock.setDate(LocalDate.now());
         stock.setAnnualDividends("0.75");
         stock.setLowestAnnualPrice("53.1525");
         stock.setHighestAnnualPrice("153.1525");
-        stock.setOpenPrice("137.98");
-    }
-
-    @Test
-    void createStock() {
-        when(stockRepository.save(stock)).thenReturn(stock);
-
-        assertThat(stockService.createStock(stock), equalTo(stock));
-        verify(stockRepository, times(1)).save(stock);
     }
 
     @Test
@@ -67,28 +60,48 @@ class StockServiceImplTest {
         List<Stock> stockList = new ArrayList<>();
         stockList.add(stock);
         when(stockRepository.findAll()).thenReturn(stockList);
+        List<Stock> result = stockService.findAllStock().orElseThrow();
 
-        assertThat(stockService.findAllStock(), allOf(notNullValue(), equalTo(stockList)));
+        assertThat(result, allOf(notNullValue(), equalTo(stockList)));
         verify(stockRepository, times(1)).findAll();
     }
 
     @Test
     void findById() {
-        final Long id = 1L;
-        when(stockRepository.findById(id)).thenReturn(Optional.of(stock));
-        when(companyRepository.findCompaniesByTicker(anyString())).thenReturn(new Company());
+        when(stockRepository.findById(anyLong())).thenReturn(Optional.of(stock));
+        Stock newStock = stockService.findById(anyLong()).orElseThrow();
 
-        assertThat(stockService.findById(id), equalTo(Optional.of(stock)));
+        assertThat(newStock, equalTo(stock));
         verify(stockRepository, times(1)).findById(anyLong());
     }
 
     @Test
-    void updateStock() {
-        when(stockRepository.save(stock)).thenReturn(stock);
-        when(companyRepository.findCompaniesByTicker(anyString())).thenReturn(new Company());
+    void findByDateAndTicker() {
+        when(stockRepository.findByDateAndTicker(any(), anyString())).thenReturn(Optional.of(stock));
+        Stock newStock = stockService.findByDateAndTicker(any(), anyString()).orElseThrow();
 
-        assertThat(stockService.updateStock(stock), equalTo(stock));
-        verify(stockRepository, times(1)).save(stock);
+        assertThat(newStock, equalTo(stock));
+        verify(stockRepository, times(1)).findByDateAndTicker(any(), anyString());
+    }
+
+    @Test
+    void createStock() {
+        when(stockRepository.save(any())).thenReturn(stock);
+        when(companyRepository.findCompaniesByTicker(anyString())).thenReturn(Optional.of(company));
+        Stock newStock = stockService.createStock(stock);
+
+        assertThat(newStock, equalTo(stock));
+        verify(stockRepository, times(1)).save(any());
+    }
+
+    @Test
+    void updateStock() {
+        when(stockRepository.save(any())).thenReturn(stock);
+        when(companyRepository.findCompaniesByTicker(anyString())).thenReturn(Optional.of(company));
+        Stock newStock = stockService.updateStock(stock);
+
+        assertThat(newStock, equalTo(stock));
+        verify(stockRepository, times(1)).save(any());
     }
 
     @Test

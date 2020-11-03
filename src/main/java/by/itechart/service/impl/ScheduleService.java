@@ -100,6 +100,7 @@ public class ScheduleService {
                 if (timeTodayPlusThreeDays.isAfter(expiryUserTime.minusDays(1))) {
                     Period period = Period.between(timeToday, expiryUserTime);
                     long daysDifference = Long.valueOf(period.getDays());
+                    sendMail.sendReminderMailToUser(user,daysDifference);
                     log.info("User with id=" + user.getId() + " will receive status = false" +
                             (daysDifference == 0L ? " today." : " after " + daysDifference + (daysDifference == 1L ? " day." : " days.")));
                 }
