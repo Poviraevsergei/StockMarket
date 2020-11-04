@@ -92,7 +92,7 @@ class StockControllerTest {
     void findById() throws Exception {
         when(stockService.findById(anyLong())).thenReturn(Optional.of(stock));
 
-        MvcResult result = mvc.perform(get("/stock/{id}", anyLong()))
+        MvcResult result = mvc.perform(get("/stock/getStock/{id}", anyLong()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andReturn();

@@ -42,7 +42,7 @@ public class WebConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/comparison", "/comparisonForTheYear").hasAnyRole("ADMIN", "CLIENT")
                 .antMatchers("/company/getCompanyFromDb/**", "/company/getAllComaniesFromDb", "/company/getAllCompanies"
                         , "/company/getCompany/**", "/company/getCompanyNews", "/company/getFinancialReport").hasAnyRole("USER", "ADMIN", "CLIENT")
-                .antMatchers("/stock/getStockCandles", "/stock/getCompanyStockForTheDay", "/stock/getCompanyStockForTheYear").hasAnyRole("USER", "ADMIN", "CLIENT")
+                .antMatchers("/stock/getStock/**","/stock/getStockCandles", "/stock/getCompanyStockForTheDay", "/stock/getCompanyStockForTheYear").hasAnyRole("USER", "ADMIN", "CLIENT")
                 .antMatchers("/user/addCompany").hasAnyRole("USER", "ADMIN", "CLIENT")
                 .antMatchers("/**").hasRole("ADMIN")
                 .anyRequest().authenticated()

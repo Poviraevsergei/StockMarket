@@ -32,7 +32,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -87,7 +87,7 @@ class MainControllerTest {
     void changeToPremium() throws Exception {
         when(userService.changeToPremium(anyString())).thenReturn(Optional.of(user));
 
-        MvcResult result = mvc.perform(put("/changeToPremium")
+        MvcResult result = mvc.perform(get("/changeToPremium")
                 .param("userLogin", anyString()))
                 .andExpect(status().isOk())
                 .andReturn();

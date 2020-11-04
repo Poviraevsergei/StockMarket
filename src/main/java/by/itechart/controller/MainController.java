@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import by.itechart.exception.CustomException;
 import org.springframework.http.ResponseEntity;
 import by.itechart.model.response.CreateUserRequest;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class MainController {
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/changeToPremium")
+    @GetMapping(value = "/changeToPremium")
     public ResponseEntity<User> changeToPremium(String userLogin) {
         User user = userService.changeToPremium(userLogin).orElseThrow(() -> new CustomException(CHANGE_TO_PREMIUM_EXCEPTION));
         return new ResponseEntity<>(user, HttpStatus.OK);

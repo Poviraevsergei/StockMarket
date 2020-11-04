@@ -1,11 +1,11 @@
 INSERT INTO USER (email, created, changed)
 VALUES ('poviraevsergei@gmail.com', '1970-01-01 00:00:01', '1970-01-01 00:00:01'),
-       ('poviraei@gmail.com', '1970-01-01 00:00:01', '1970-01-01 00:00:01'),
-       ('email3', '1970-01-01 00:00:01', '1970-01-01 00:00:01');
+       ('randomMail@gmail.com', '1970-01-01 00:00:01', '1970-01-01 00:00:01'),
+       ('randomMail2@gmail.com', '1970-01-01 00:00:01', '1970-01-01 00:00:01');
 
 INSERT INTO STATUS (is_active, expiry_date)
 VALUES (false, '2020-10-10'),
-       (false, '2020-10-12'),
+       (true, '2021-10-12'),
        (false, '2020-10-11');
 
 INSERT INTO SECURITY (login, password, user_role)
@@ -24,9 +24,9 @@ VALUES ('Apple Inc', 'AAPL', 'Technology', '14089961010', 'https://www.apple.com
 INSERT INTO STOCK (company, open_price, close_price, ticker, date, annual_dividends, lowest_annual_price,
                    highest_annual_price)
 VALUES ('1', '113.92', '113.02', 'AAPL', '2020-10-05', '0.75', '53.1525', '137.98'),
-       ('2', '330.34', '326.92', 'EPAM', '2020-10-26', '-', '151.97', '338.91'),
-       ('2', '230.34', '226.92', 'EPAM', '2019-10-26', '-', '251.97', '238.91'),
-       ('3', '423.35', '415.09', 'TSLA', '2020-10-26', '-', '44.856', '502.49'),
+       ('2', '330.34', '326.92', 'EPAM', '2019-11-04', '-', '151.97', '338.91'),
+       ('2', '230.34', '226.92', 'EPAM', '2020-11-04', '-', '251.97', '238.91'),
+       ('3', '423.35', '415.09', 'TSLA', '2020-11-04', '-', '44.856', '502.49'),
        ('3', '223.35', '215.09', 'TSLA', '2020-10-25', '-', '44.856', '502.49');
 
 INSERT INTO user_company (user_id, company_id)
