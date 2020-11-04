@@ -16,6 +16,8 @@ public interface UserService {
 
     Optional<User> changeToPremium(String userLogin);
 
+    Optional<User> changePassword(String newPassword);
+
     Optional<User> addCompanyToAccount(String ticker);
 
     User createUser(CreateUserRequest CreateUserRequest);

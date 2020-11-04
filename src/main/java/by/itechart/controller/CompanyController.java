@@ -75,8 +75,8 @@ public class CompanyController {
         return new ResponseEntity<>(companyNews, HttpStatus.OK);
     }
 
-    @GetMapping("/getFinancialReport")
-    public ResponseEntity<CompanyFinancialReportResponse> getFinancialReport(String ticker) {
+    @GetMapping("/getFinancialReport/{ticker}")
+    public ResponseEntity<CompanyFinancialReportResponse> getFinancialReport(@PathVariable String ticker) {
         CompanyFinancialReportResponse financialReport = companyServiceFeign.getFinancialReport(ticker)
                 .orElseThrow(() -> new ResourceNotFoundException(COMPANY_REPORTS_NOT_FOUND));
         return new ResponseEntity<>(financialReport, HttpStatus.OK);

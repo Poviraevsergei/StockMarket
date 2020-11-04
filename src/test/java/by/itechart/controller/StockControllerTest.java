@@ -89,15 +89,17 @@ class StockControllerTest {
     }
 
     @Test
-    void findById() throws Exception {
-        when(stockService.findById(anyLong())).thenReturn(Optional.of(stock));
+    void findByDateAndTicker() throws Exception {
+        when(stockService.findByDateAndTicker(anyString(), anyString())).thenReturn(Optional.of(stock));
 
-        MvcResult result = mvc.perform(get("/stock/getStock/{id}", anyLong()))
+        MvcResult result = mvc.perform(get("/stock/getStock")
+                .param("date", anyString())
+                .param("ticker", anyString()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andReturn();
         assertThat(result.getResponse().getContentAsString(), allOf(notNullValue()));
-        verify(stockService, times(1)).findById(anyLong());
+        verify(stockService, times(1)).findByDateAndTicker(anyString(),anyString());
     }
 
     @Test

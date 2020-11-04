@@ -42,4 +42,17 @@ public class SendMailMethods {
         mail.setText(MAIL_TEXT);
         javaMailSender.send(mail);
     }
+
+    public void sendChangePasswordMailToUser(User user, String password) {
+        final String MAIL_TEXT = "Dear " + user.getSecurity().getLogin() + "! We are glad to welcome you to our website."
+                + System.lineSeparator() + "Your login: " + user.getSecurity().getLogin()
+                + System.lineSeparator() + "Your password: " + password
+                + System.lineSeparator() + "Best regards, support team stock-market.com.";
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(user.getEmail());
+        mail.setFrom(STOCK_MARKET_MAIL_ADDRESS);
+        mail.setSubject(MAIL_SUBJECT);
+        mail.setText(MAIL_TEXT);
+        javaMailSender.send(mail);
+    }
 }

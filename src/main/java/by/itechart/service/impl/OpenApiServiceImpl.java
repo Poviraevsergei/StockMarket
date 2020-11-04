@@ -23,15 +23,15 @@ public class OpenApiServiceImpl implements OpenApiService {
 
     @Override
     public Optional<ComparisonResponse> comparison(String firstTicker, String secondTicker) {
-        Stock firstStock = stockService.findByDateAndTicker(LocalDate.now(), firstTicker).orElseThrow(() -> new CustomException(COMPARISON_EXCEPTION));
-        Stock secondStock = stockService.findByDateAndTicker(LocalDate.now(), secondTicker).orElseThrow(() -> new CustomException(COMPARISON_EXCEPTION));
+        Stock firstStock = stockService.findByDateAndTicker(LocalDate.now().toString(), firstTicker).orElseThrow(() -> new CustomException(COMPARISON_EXCEPTION));
+        Stock secondStock = stockService.findByDateAndTicker(LocalDate.now().toString(), secondTicker).orElseThrow(() -> new CustomException(COMPARISON_EXCEPTION));
         return Optional.of(compareStocks(firstStock, secondStock));
     }
 
     @Override
     public Optional<ComparisonResponse> comparisonForTheYear(String ticker) {
-        Stock todayStock = stockService.findByDateAndTicker(LocalDate.now(), ticker).orElseThrow(() -> new CustomException(COMPARISON_FOR_THE_YEAR_EXCEPTION));
-        Stock lastYearStock = stockService.findByDateAndTicker(LocalDate.now().minusYears(1), ticker).orElseThrow(() -> new CustomException(COMPARISON_FOR_THE_YEAR_EXCEPTION));
+        Stock todayStock = stockService.findByDateAndTicker(LocalDate.now().toString(), ticker).orElseThrow(() -> new CustomException(COMPARISON_FOR_THE_YEAR_EXCEPTION));
+        Stock lastYearStock = stockService.findByDateAndTicker(LocalDate.now().minusYears(1).toString(), ticker).orElseThrow(() -> new CustomException(COMPARISON_FOR_THE_YEAR_EXCEPTION));
         return Optional.of(compareStocks(todayStock, lastYearStock));
     }
 

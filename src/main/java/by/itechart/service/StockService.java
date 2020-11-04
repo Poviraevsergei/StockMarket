@@ -12,7 +12,7 @@ public interface StockService {
 
     Optional<Stock> findById(Long id);
 
-    Optional<Stock> findByDateAndTicker(LocalDate date, String ticker);
+    Optional<Stock> findByDateAndTicker(String date, String ticker);
 
     Stock createStock(Stock stock);
 

@@ -50,7 +50,7 @@ class CompanyRepositoryTest {
 
     @Test
     void findAll() {
-        final int COMPANIES_COUNT_IN_DATABASE = 3;
+        final int COMPANIES_COUNT_IN_DATABASE = 4;
         List<Company> resultList = (List<Company>) companyRepository.findAll();
 
         assertThat(resultList, is(notNullValue()));

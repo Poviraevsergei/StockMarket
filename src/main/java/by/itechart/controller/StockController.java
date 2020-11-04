@@ -45,9 +45,9 @@ public class StockController {
         return new ResponseEntity<>(allStocks, HttpStatus.OK);
     }
 
-    @GetMapping("/getStock/{id}")
-    public ResponseEntity<Stock> findById(@PathVariable Long id) {
-        Stock stock = stockService.findById(id).orElseThrow(() -> new ResourceNotFoundException(STOCK_NOT_FOUND));
+    @GetMapping("/getStock")
+    public ResponseEntity<Stock> findByDateAndTicker(@RequestParam String date, String ticker) {
+        Stock stock = stockService.findByDateAndTicker(date,ticker).orElseThrow(() -> new ResourceNotFoundException(STOCK_NOT_FOUND));
         return new ResponseEntity<>(stock, HttpStatus.OK);
     }
 
