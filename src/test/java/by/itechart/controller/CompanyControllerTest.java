@@ -146,8 +146,7 @@ class CompanyControllerTest {
     void getFinancialReport() throws Exception {
         when(companyServiceFeign.getFinancialReport(anyString())).thenReturn(Optional.of(new CompanyFinancialReportResponse()));
 
-        MvcResult result = mvc.perform(get("/company/getFinancialReport")
-                .param("ticker", TEST_TICKER))
+        MvcResult result = mvc.perform(get("/company/getFinancialReport/{ticker}",TEST_TICKER))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON))
                 .andReturn();

@@ -32,4 +32,5 @@ public class ProjectProperties {
     public final static String ADD_COMPANY_TO_ACCOUNT_EXCEPTION = "Company wasn't added!";
     public final static String USER_DETAIL_NOT_FOUND = "UserDetails wasn't found!";
     public final static String TEST_TICKER = "TEST";
+    public final static String CHANGE_PASSWORD_EXCEPTION = "Exception in changePassword method!";
 }

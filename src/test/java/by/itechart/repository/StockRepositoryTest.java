@@ -51,7 +51,7 @@ class StockRepositoryTest {
 
     @Test
     public void findAll() {
-        final int STOCKS_COUNT_IN_DATABASE = 5;
+        final int STOCKS_COUNT_IN_DATABASE = 8;
         List<Stock> resultList = (List<Stock>) stockRepository.findAll();
 
         assertThat(resultList, is(notNullValue()));

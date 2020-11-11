@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import static by.itechart.utils.ProjectProperties.TEST_TICKER;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.times;
@@ -78,10 +79,10 @@ class StockServiceImplTest {
     @Test
     void findByDateAndTicker() {
         when(stockRepository.findByDateAndTicker(any(), anyString())).thenReturn(Optional.of(stock));
-        Stock newStock = stockService.findByDateAndTicker(any(), anyString()).orElseThrow();
+        Stock newStock = stockService.findByDateAndTicker("2019-11-04", TEST_TICKER).orElseThrow();
 
         assertThat(newStock, equalTo(stock));
-        verify(stockRepository, times(1)).findByDateAndTicker(any(), anyString());
+        verify(stockRepository, times(1)).findByDateAndTicker(any(LocalDate.class), anyString());
     }
 
     @Test

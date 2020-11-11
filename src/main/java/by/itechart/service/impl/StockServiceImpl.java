@@ -34,8 +34,9 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public Optional<Stock> findByDateAndTicker(LocalDate date, String ticker) {
-        return stockRepository.findByDateAndTicker(date, ticker);
+    public Optional<Stock> findByDateAndTicker(String date, String ticker) {
+        LocalDate localDate = LocalDate.parse(date);
+        return stockRepository.findByDateAndTicker(localDate, ticker);
     }
 
     @Override

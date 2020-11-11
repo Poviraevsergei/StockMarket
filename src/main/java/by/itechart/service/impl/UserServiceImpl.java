@@ -1,5 +1,6 @@
 package by.itechart.service.impl;
 
+import by.itechart.utils.SendMailMethods;
 import lombok.extern.slf4j.Slf4j;
 import by.itechart.model.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +21,12 @@ import java.util.List;
 import java.util.Optional;
 import java.time.LocalDate;
 
+import static by.itechart.config.BeanConfiguration.passwordEncoder;
 import static by.itechart.utils.ProjectProperties.ROLE_USER;
 import static by.itechart.utils.ProjectProperties.ROLE_CLIENT;
-import static by.itechart.utils.ProjectProperties.ADD_COMPANY_TO_ACCOUNT_EXCEPTION;
+import static by.itechart.utils.ProjectProperties.CHANGE_PASSWORD_EXCEPTION;
 import static by.itechart.utils.ProjectProperties.CHANGE_TO_PREMIUM_EXCEPTION;
+import static by.itechart.utils.ProjectProperties.ADD_COMPANY_TO_ACCOUNT_EXCEPTION;
 
 @Slf4j
 @Service
@@ -33,6 +36,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final SecurityRepository securityRepository;
     private final CompanyService companyService;
+    private final SendMailMethods sendMail;
 
     @Override
     public Optional<List<User>> findAllUsers() {
@@ -99,5 +103,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUserById(Long id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<User> changePassword(String newPassword) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findById(securityRepository.findByLogin(userDetails.getUsername()).getId())
+                .orElseThrow(() -> new CustomException(CHANGE_PASSWORD_EXCEPTION));
+        user.getSecurity().setPassword(passwordEncoder().encode(newPassword));
+        sendMail.sendChangePasswordMailToUser(user, newPassword);
+        return Optional.of(userRepository.save(user));
     }
 }
